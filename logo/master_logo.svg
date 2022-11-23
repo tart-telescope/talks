@@ -7,6 +7,10 @@
    viewBox="0 0 164.80062 35.156506"
    version="1.1"
    id="svg4794"
+   sodipodi:docname="tart_logo.svg"
+   inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg"
    xmlns:rdf="http://www.w3.org/1999/02/22-rdf-syntax-ns#"
@@ -14,6 +18,31 @@
    xmlns:dc="http://purl.org/dc/elements/1.1/">
   <defs
      id="defs4788" />
+  <sodipodi:namedview
+     id="base"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageopacity="0.0"
+     inkscape:pageshadow="2"
+     inkscape:zoom="0.64"
+     inkscape:cx="-467.1875"
+     inkscape:cy="-205.46875"
+     inkscape:document-units="mm"
+     inkscape:current-layer="flowRoot6654"
+     showgrid="false"
+     fit-margin-top="0"
+     fit-margin-left="0"
+     fit-margin-right="0"
+     fit-margin-bottom="0"
+     inkscape:window-width="2560"
+     inkscape:window-height="1375"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:snap-object-midpoints="true"
+     inkscape:snap-midpoints="true"
+     inkscape:pagecheckerboard="0" />
   <metadata
      id="metadata4791">
     <rdf:RDF>
@@ -26,6 +55,8 @@
     </rdf:RDF>
   </metadata>
   <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
      id="layer1"
      transform="translate(-60.688017,-50.571198)">
     <g
@@ -4869,10 +4900,12 @@
          x="-17.968716"
          y="251.03122"
          id="text2732"><tspan
+           sodipodi:role="line"
            id="tspan2730"
            x="-17.968716"
            y="251.03122"
            style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48.0000006px;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Transient Array</tspan><tspan
+           sodipodi:role="line"
            x="-17.968716"
            y="301.03122"
            id="tspan2734"
