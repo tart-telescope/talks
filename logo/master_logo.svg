@@ -2,12 +2,12 @@
 <!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="164.80061mm"
-   height="35.156506mm"
-   viewBox="0 0 164.80062 35.156506"
+   width="159.70755mm"
+   height="39.115673mm"
+   viewBox="0 0 159.70756 39.115674"
    version="1.1"
    id="svg4794"
-   sodipodi:docname="tart_logo.svg"
+   sodipodi:docname="master_logo.svg"
    inkscape:version="1.1.2 (0a00cf5339, 2022-02-04)"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
@@ -25,16 +25,16 @@
      borderopacity="1.0"
      inkscape:pageopacity="0.0"
      inkscape:pageshadow="2"
-     inkscape:zoom="0.64"
-     inkscape:cx="-467.1875"
-     inkscape:cy="-205.46875"
+     inkscape:zoom="1.8101934"
+     inkscape:cx="445.80873"
+     inkscape:cy="160.48009"
      inkscape:document-units="mm"
      inkscape:current-layer="flowRoot6654"
      showgrid="false"
-     fit-margin-top="0"
-     fit-margin-left="0"
-     fit-margin-right="0"
-     fit-margin-bottom="0"
+     fit-margin-top="2"
+     fit-margin-left="2"
+     fit-margin-right="2"
+     fit-margin-bottom="2"
      inkscape:window-width="2560"
      inkscape:window-height="1375"
      inkscape:window-x="0"
@@ -58,10 +58,10 @@
      inkscape:label="Layer 1"
      inkscape:groupmode="layer"
      id="layer1"
-     transform="translate(-60.688017,-50.571198)">
+     transform="translate(-58.708433,-48.591614)">
     <g
        aria-label="North End"
-       style="font-style:normal;font-weight:normal;font-size:20.98862648px;line-height:1.25;font-family:sans-serif;letter-spacing:1.58404744px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17511956"
+       style="font-style:normal;font-weight:normal;font-size:20.9886px;line-height:1.25;font-family:sans-serif;letter-spacing:1.58405px;word-spacing:0px;fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.17512"
        id="text4631" />
     <g
        id="g6640"
@@ -4896,7 +4896,7 @@
        id="flowRoot6654">
       <text
          xml:space="preserve"
-         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;line-height:1.25;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none;font-variant-east-asian:normal"
+         style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;line-height:1.25;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;text-align:start;letter-spacing:0px;word-spacing:0px;writing-mode:lr-tb;text-anchor:start;fill:#000000;fill-opacity:1;stroke:none"
          x="-17.968716"
          y="251.03122"
          id="text2732"><tspan
@@ -4904,12 +4904,12 @@
            id="tspan2730"
            x="-17.968716"
            y="251.03122"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48.0000006px;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Transient Array</tspan><tspan
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Transient Array</tspan><tspan
            sodipodi:role="line"
            x="-17.968716"
-           y="301.03122"
+           y="311.03122"
            id="tspan2734"
-           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48.0000006px;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Radio Telescope</tspan></text>
+           style="font-style:normal;font-variant:normal;font-weight:bold;font-stretch:normal;font-size:48px;font-family:'Bitstream Vera Serif';-inkscape-font-specification:'Bitstream Vera Serif, Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal">Radio Telescope</tspan></text>
     </g>
   </g>
 </svg>

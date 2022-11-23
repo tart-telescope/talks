@@ -1,4 +1,7 @@
-EXPORT_OPTIONS=master_logo.svg --export-area-page --export-area-snap --export-overwrite 
+EXPORT_OPTIONS=master_logo.svg --export-area-page  --export-text-to-path --export-area-snap --export-overwrite 
+
+all: 	svg png
+	echo "Done"
 
 svg:
 	inkscape ${EXPORT_OPTIONS} --export-plain-svg  --export-type=svg -o tart_logo.svg
