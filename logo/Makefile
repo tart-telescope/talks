@@ -9,3 +9,5 @@ svg:
 png:
 	inkscape ${EXPORT_OPTIONS} --export-dpi=300  --export-type=png -o tart_logo.png
 	
+pdf:
+	inkscape ${EXPORT_OPTIONS}  --export-type=pdf -o tart_logo.pdf
