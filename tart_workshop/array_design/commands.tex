@@ -1,0 +1,41 @@
+\newcommand{\aug}[1]{\breve{#1}}
+\newcommand{\conj}[1]{\overline{#1}}
+\newcommand{\normal}{\mathcal{N}}
+
+\newcommand{\amatr}[1]{\matr{\aug{{#1}}}}
+\newcommand{\avect}[1]{\vect{\aug{#1}}}
+\newcommand{\acov}[1]{\amatr{\Sigma}_{#1}}
+
+\newcommand{\complex}{\mathbb{C}}
+\newcommand{\real}{\mathbb{R}}
+
+\newcommand{\cnormal}{\complex\normal}
+\newcommand{\cnormals}[1]{\cnormal \left( \vect{\mu}_{#1}, \matr{\Gamma}_{#1}, \matr{C}_{#1}\right)}
+
+\newcommand{\anormals}[1]{\aug{\normal} \left( \avect{\mu}_{#1}, \acov{#1}\right)}
+
+\newcommand{\covo}{\matr{\Sigma_{0}}^{-1}}
+\newcommand{\covv}{\matr{\Sigma_{v}}^{-1}}
+\newcommand{\covp}{\matr{\Sigma_{1}}^{-1}}
+
+
+\newcommand{\cov}{\left(\covo + \covv \right)}
+
+
+\newcommand{\sigmaz}[1]{\begin{pmatrix} \Gamma_{#1} & C_{#1} \\ \conj{C}_{#1} & \conj{\Gamma}_{#1} \end{pmatrix}}
+\newcommand{\sigmazcirc}[1]{\begin{pmatrix} \Gamma_{#1} & \matr{0} \\ \matr{0} & \conj{\Gamma}_{#1} \end{pmatrix}}
+
+
+\newcommand{\matr}[1]{\mathbf{#1}}
+\newcommand{\vect}[1]{\mathbf{\vec{#1}}}
+\newcommand{\uvec}[1]{\hat{\mathbf{\vec{#1}}}}
+
+\newcommand{\sky}{\vect{s}}
+\newcommand{\gmat}{\mathbf{T}}
+\newcommand{\fringe}{\uvec{h}}
+
+\newcommand{\skyspace}{\mathcal{S}}
+
+\newcommand{\nullspace}{\mathrm{null}}
+\newcommand{\range}{\mathrm{range}}
+\newcommand{\rank}{\mathrm{rank}}

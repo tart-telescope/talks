@@ -1,0 +1,11 @@
+*.aux
+*.log
+*.nav
+*.out
+tart_calibration/tart_calibration_talk.pdf
+*.snm
+*.synctex.gz
+*.toc
+*.bbl
+*.blg
+*.vrb
