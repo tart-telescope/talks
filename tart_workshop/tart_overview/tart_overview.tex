@@ -4,11 +4,12 @@
 \usepackage{graphicx}
 \usepackage{pgf}
 \usepackage{caption}
+\usepackage{listings}
 \usepackage{multimedia}
 \usepackage{gensymb}
 \usepackage{amsmath, mathrsfs}
 
-\captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
+% \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
 \usetheme{Boadilla}
 \usefonttheme{serif}
@@ -19,7 +20,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART]{The Transient Array Radio Telescope (TART) Overview}
+\title[TART]{The Transient Array Radio Telescope (TART)}
 
 \author[Molteno]{Tim Molteno}
 
@@ -39,7 +40,7 @@
 
 \logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{fig/elec_logo.pdf}}}} 
 
-\date[TART-Workshop] % (optional, should be abbreviation of conference name)
+\date[UWC 06/2024] % (optional, should be abbreviation of conference name)
 {}
 
 % \addtobeamertemplate{headline}{}{%
@@ -49,10 +50,17 @@
 
 \begin{document}
 
-
+% Abstract: In this talk I'll give an overview of Africa's newest radio telescope, the TART, recently installed in Mauritius in a joint effort between SARAO, the University of Otago (NZ). I'll talk about TARTs origins, it's design and open-source philosophy as well as the upcoming project to install TART telescopes in the SKA African partner nations. I'll also include some details about improvements that will appear in TART-3, the next version of TART!
 
 \begin{frame}
   \titlepage
+\end{frame}
+ 
+\begin{frame}
+\vspace{1cm}
+
+  \includegraphics[width=\linewidth]{fig/spiral.jpeg}\\
+  \centering{A TART radio telescope under construction at UdM}
 \end{frame}
 
 % \begin{frame}{Abstract}
@@ -64,7 +72,7 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
-\section{TART: Prehistory}
+\section{Origins of TART}
 
 \begin{frame}{TART: Single-Dish Engineering Prototype}
    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
@@ -102,11 +110,8 @@
 % \end{center}
 % \end{frame}
 
-\section{MeerKAT: The world's biggest radio telescope}
 
-\frame{\tableofcontents[currentsection]}
-
-\begin{frame}{MeerKAT: Africa centre of radio astronomy}
+\begin{frame}{MeerKAT: Africa is a world-leader in radio astronomy}
 \begin{center}
   \includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
 \end{center}
@@ -120,12 +125,12 @@
 \end{frame}
 
 
-\begin{frame}{MeerKAT: The Centre of our Galaxy}
- \begin{center}
-  \includegraphics[width=\linewidth]{fig/MeerKAT_GalacticCentre_image.jpeg}
- \end{center}
-
-\end{frame}
+% \begin{frame}{MeerKAT: The Centre of our Galaxy}
+%  \begin{center}
+%   \includegraphics[width=\linewidth]{fig/MeerKAT_GalacticCentre_image.jpeg}
+%  \end{center}
+% 
+% \end{frame}
 
 
 \begin{frame}{MeerKAT: It's very precious}
@@ -136,12 +141,13 @@ MeerKAT is currently the worlds biggest radio telescope
 \item Running cost: millions
 \item A long queue of eager astronomers...
 \end{itemize}
+\vspace{1cm}
 \includegraphics[width=0.32\linewidth]{fig/ska-logo-color.pdf}
 \includegraphics[width=0.32\linewidth]{fig/NRF_SARAO_sm1.png}
 \includegraphics[width=0.32\linewidth]{fig/ska-partners.png}
 \end{frame}
 
-\section{TART: The worlds smallest radio telescope}
+\section{TART: A telescope designed for research}
 
 \frame{\tableofcontents[currentsection]}
 
@@ -158,41 +164,48 @@ MeerKAT is currently the worlds biggest radio telescope
 
 
 \begin{frame}{TART-2: Overview}
- \begin{columns}
-  \begin{column}{0.4\linewidth}
-   \begin{itemize}
-    \item Array radio telescope
-    \item 24 receivers
-    \item Real-time correlation in FPGA
-    \item Open-Source Design
-    \item Cost: \$1000 Euro
-   \end{itemize}
-   \begin{center}
-  \includegraphics[height=0.4\textheight]{fig/antenna.jpg}
-  \end{center}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-   \includegraphics[width=\textwidth]{../../../papers/2019_iceaa/top_view.jpg}
-  \end{column}
- \end{columns}
+   \includegraphics[width=\textwidth]{fig/drone_view_rhodes.jpg}
+   \centering{all-sky  $\cdot$ 24 antennas $\cdot$ real-time $\cdot$ open-source $\cdot$ imaging interferometer } 
 \end{frame}
 
 
-\begin{frame}{TART-2: Installation at Rhodes}
-\begin{center}
-  \includegraphics[width=0.9\linewidth]{fig/rhodes_photo_array.jpg}
-\end{center}
-\begin{itemize}
- \item 0.025 meter antennas. 0.0005 $m^2$.
- \item Frequency Range: 1575.42 MHz ($\pm 4$)
- \item Dunedin, NZ, Rhodes \& Stellenbosch South Africa.
-\end{itemize}
-\end{frame}
 
-\begin{frame}
-\vspace{1cm}
-  \includegraphics[width=\linewidth]{fig/rhodes_news_sa.jpg}
+
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart_udm_array.jpg}}
+\begin{frame}[plain]
 \end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
+
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart2_wiring_mess.jpg}}
+\begin{frame}[plain]
+\end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
+
+
+\subsection*{Open Source}
+
+
+% \begin{frame}{TART-2: Installation in South Africa}
+% \begin{center}
+%   \includegraphics[width=0.9\linewidth]{fig/rhodes_photo_array.jpg}
+% \end{center}
+% \begin{itemize}
+%  \item 0.025 meter antennas. 0.0005 $m^2$.
+%  \item Frequency Range: 1575.42 MHz ($\pm 4$)
+%  \item Dunedin, NZ, Rhodes \& Stellenbosch South Africa.
+% \end{itemize}
+% \end{frame}
+% 
+% \begin{frame}
+% \vspace{1cm}
+%   \includegraphics[width=\linewidth]{fig/rhodes_news_sa.jpg}
+% \end{frame}
 
 \begin{frame}{TART is open-source}
   \centering\url{https://github.com/tart-telescope}
@@ -221,7 +234,7 @@ MeerKAT is currently the worlds biggest radio telescope
 \end{frame}
 
  
-\begin{frame}{TART components}
+\begin{frame}{TART-2 components}
   \includegraphics[width=\linewidth]{fig/tart_overview.pdf}
 \end{frame}
 
@@ -229,85 +242,105 @@ MeerKAT is currently the worlds biggest radio telescope
 
 \begin{frame}{GPS receiver chips}
  \begin{columns}
-  \begin{column}{0.4\linewidth}
+  \begin{column}{0.5\linewidth}
     \includegraphics[width=\linewidth]{fig/max_2769.jpg}
   \end{column}
-  \begin{column}{0.6\linewidth}
-    \includegraphics[width=\linewidth]{fig/max_2769_schem.png}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{Upgrade Coming, late 2024}
-  \begin{columns}
   \begin{column}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{fig/max2771.png}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-  New Radio Front End.
+  GPS silicon devices in TART:
 \begin{itemize}
- \item 10x bandwidth (26 MHz)
- \item Zero IF operation
- \item 1160-1290 MHz and 1525-1610 MHz bands
- \item New radio module. TART-3
+ \item Operates at 1575 MHz (19cm)
+ \item Low-cost, widely available
+ \item 2.5 MHz bandwidth
+ \item 16 millions bits per second
 \end{itemize}
-
   \end{column}
   \end{columns}
 \end{frame}
 
-% \begin{frame}{Telescope Electronics}
-% \centering
-%  \includegraphics[height=0.4\textheight]{fig/control_board_photo.jpg}
-%  \includegraphics[height=0.4\textheight]{fig/radio_hub_photo.jpg}
-% 
-%  \includegraphics[width=0.7\linewidth]{fig/radio_module.png}
-% \end{frame}
-% 
 
+
+\section{Calibration Imaging \& Data}
+
+\frame{\tableofcontents[currentsection]}
+
+
+\begin{frame}{The Calibration Sources}
+ \begin{columns}
+  \begin{column}{0.5\linewidth}
+   \includegraphics[height=0.9\textheight]{fig/QZS-1.jpg}
+  \end{column}
+  \begin{column}{0.5\linewidth}
+  \begin{itemize}
+   \item Position known to millimeters
+   \item $>20000$ km away (point sources)
+   \item Signal is `noise-like'
+  \end{itemize}
+   \includegraphics[width=\textwidth]{fig/qzss_ground_track.jpg}
+   {\tiny Image: JAXA}
+  \end{column}
+ \end{columns}
+\end{frame}
 
 \begin{frame}
  \includegraphics[width=\linewidth]{fig/browser_view.png}
 \end{frame}
 
-\begin{frame}{Synthesis Imaging}
-Measure complex visibility $V_{ij}$ by correlating signals from antenna $i$ and $j$.
-\[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
-\begin{columns}
- \begin{column}{0.55\linewidth}
-\begin{enumerate}
- \item 276 Pairs of antennas
- \item 16.368 MHz sampling rate per antenna
- \item Real-time correlation in FPGA
- \item 4.5 Giga MAC per second
- \item T $\sim$ 1 second
-\end{enumerate}
- \end{column}
- \begin{column}{0.45\linewidth}
- \includegraphics[width=\linewidth]{fig/papilio_pro.jpg}
- \end{column}
-\end{columns}
+\begin{frame}[containsverbatim]
+\frametitle{TART API: Access data from anywhere}
+TART data and control are done throught a web-based API. 
+
+\centering{\url{https://api.elec.ac.nz/tart/tart3-test/}}
+
+\begin{lstlisting}[language=Python, frame=single, basicstyle=\footnotesize]
+ import requests
+ 
+ api_endpoint = "https://api.elec.ac.nz/tart/tart3-test/api/"
+ r = requests.get(api_endpoint + "/v1/imaging/vis")
+ print(r.json())
+\end{lstlisting}
 
 \end{frame}
 
-\begin{frame}{Synthesis Continued...}
-Fourier transform relationship between radio sky brightness $I(l,m)$ and
-visibility $V(u,v)$,
-\[
-  V(u,v) = \int I(l,m) e^{2\pi j(lu  + mv)} dl dm
-\]
-Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$, 
-\[
- I(l,m) = \mathscr{F}^{-1}\{V(u,v)\}
-\]
-where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair. 
-\end{frame}
+% \begin{frame}{Synthesis Imaging}
+% Measure complex visibility $V_{ij}$ by correlating signals from antenna $i$ and $j$.
+% \[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
+% \begin{columns}
+%  \begin{column}{0.55\linewidth}
+% \begin{enumerate}
+%  \item 276 Pairs of antennas
+%  \item 16.368 MHz sampling rate per antenna
+%  \item Real-time correlation in FPGA
+%  \item 4.5 Giga MAC per second
+%  \item T $\sim$ 1 second
+% \end{enumerate}
+%  \end{column}
+%  \begin{column}{0.45\linewidth}
+%  \includegraphics[width=\linewidth]{fig/papilio_pro.jpg}
+%  \end{column}
+% \end{columns}
+% 
+% \end{frame}
+% 
+% \begin{frame}{Synthesis Continued...}
+% Fourier transform relationship between radio sky brightness $I(l,m)$ and
+% visibility $V(u,v)$,
+% \[
+%   V(u,v) = \int I(l,m) e^{2\pi j(lu  + mv)} dl dm
+% \]
+% Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$, 
+% \[
+%  I(l,m) = \mathscr{F}^{-1}\{V(u,v)\}
+% \]
+% where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair. 
+% \end{frame}
+% 
 
+\section{Expected \& Unexpected Results}
 
 \begin{frame}{Tart Imaging Results}
 \begin{center}
 \includegraphics[width=0.6\linewidth]{fig/tart_snapshot.pdf}\\
- \hyperlinkmovie{A Video}{https://tart.elec.ac.nz/old/strange{\_}flyby.webm}
+ \url{https://tart.elec.ac.nz/old/strange_flyby.webm}
  \end{center}
 \end{frame}
 
@@ -365,24 +398,6 @@ where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locat
 % % % \end{columns}
 % % % \end{frame}
 % % 
-% % \subsection{Satellites as Guide Stars}
-% % 
-% % \begin{frame}{The Guide Stars}
-% %  \begin{columns}
-% %   \begin{column}{0.5\linewidth}
-% %    \includegraphics[height=0.9\textheight]{../sarao_bursary_2019/fig/QZS-1.jpg}
-% %   \end{column}
-% %   \begin{column}{0.5\linewidth}
-% %   \begin{itemize}
-% %    \item Position known to millimeters
-% %    \item $>20000$ km away (point sources)
-% %    \item Signal is `noise-like'
-% %   \end{itemize}
-% %    \includegraphics[width=\textwidth]{fig/qzss_ground_track.jpg}
-% %    {\tiny Image: JAXA}
-% %   \end{column}
-% %  \end{columns}
-% % \end{frame}
 % % 
 % 
 % 
@@ -392,7 +407,8 @@ where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locat
 % \end{center}
 % \end{frame}
 
-\section{Building the TART Community}
+
+\section{The TART Community}
 
 \frame{\tableofcontents[currentsection]}
 
@@ -406,7 +422,8 @@ where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locat
    \item Week-long workshops
    \item Mornings: Lectures on radio astronomy
    \item Afternoons: Building a TART
-   \item Joint supervision between members,
+   \item Joint supervision between members
+   \item Including schools (2025 \& 2026)
   \end{itemize}
   \vspace{1cm}
    \includegraphics[width=\linewidth]{fig/workshop-partners.png}
@@ -414,17 +431,80 @@ where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locat
  \end{columns}
 \end{frame}
 
-\begin{frame}{What the future holds}
-    \includegraphics[width=\linewidth]{fig/tart3.jpg}
+\section{TART upgrades: MeerTART or ngTART}
+
+\frame{\tableofcontents[currentsection]}
+
+
+\begin{frame}{TART-3 Electronics}
+ \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
 \end{frame}
-\begin{frame}{TART-3}
+
+\begin{frame}{TART-3 Features}
+ \begin{columns}
+  \begin{column}{0.4\linewidth}
+    \begin{itemize}
+    \item 32-Antennas (276 $\rightarrow$ 496 Visibilities)
+    \item New Correlator will support up to 64 Antennas!
+    \item 2-bit data!
+    \item New radios: $10 \times$ bandwidth
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.6\linewidth}
+    \includegraphics[width=\linewidth]{fig/tart3.jpg}
+  \end{column}
+\end{columns}
+    \begin{block}{Sensitivity}
+Sensitivity increase of ~$20 \times$
+    \end{block}
+    \begin{block}{Reliability}
+Simplified wiring. Much easier installation. Easier to maintain.
+    \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Upgraded Radios, late 2024}
+  \begin{columns}
+  \begin{column}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{fig/max2771.png}
+  \end{column}
+  \begin{column}{0.6\linewidth}
+  New Radio Front End.
+\begin{itemize}
+ \item 10x bandwidth (26 MHz)
+ \item Zero IF operation
+ \item 1160-1290 MHz and 1525-1610 MHz bands
+ \item New radio module, will plug into existing TARTs.
+\end{itemize}
+
+  \end{column}
+  \end{columns}
+\end{frame} 
+
+\begin{frame}{Upgraded Array Layouts}
+ Use machine learning frameworks to optimize antenna layouts:
+ 
+ \includegraphics[width=\linewidth]{fig/spiral6_24.pdf}
+ 
+ That minimize the condition number or entropy of the telescope operator.
+ 
+     \begin{block}{Reliability}
+Hidden cables. Much easier installation. Ideal for workshops.
+    \end{block}
+
+\end{frame}
+
+
+\begin{frame}{What the future holds}
  \begin{columns}
   \begin{column}{0.6\linewidth}
     \begin{itemize}
-    \item TART 3.0. 32-Antennas, modular
+    \item TART 3.0.
     \item Transient event detection
     \item More workshops!
     \item Automatic tracking of space Debris
+    \item New Array Designs
     \item New imaging algorithms (Gridless, Direct from Data)
     \end{itemize}
   \end{column}
@@ -439,10 +519,6 @@ where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locat
 
 \end{frame}
 
-
-% \begin{frame}{Square Kilometer Array (www.skatelescope.org)}
-% \includegraphics[width=\linewidth]{fig/1920px-SKA_overview.jpg}
-% \end{frame}
 
 
 \end{document}
