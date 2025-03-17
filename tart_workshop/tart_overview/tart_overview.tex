@@ -20,33 +20,25 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART]{The Transient Array Radio Telescope (TART): Africa's newest radio telescope!}
-
+\title[TART]{The Transient Array Radio Telescope (TART): An overview}
 \author[Molteno]{Tim Molteno}
 
 \institute[Otago]
 {
-  Department of Physics\\
+  Electronics Research Foundation \\
+  \& \\
+  Department of Physics,
   University of Otago \\
-  Dunedin, New Zealand.\\
-  tim@elec.ac.nz\\
+  \vspace{1cm}
+  \large{Dunedin, New Zealand.}\\
   \vspace{2cm}
-  \includegraphics[width=0.7\linewidth]{fig/elec_header_font.pdf}
+  \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
 }
 
-% \titlegraphic{\includegraphics[width=2cm]{fig/elec_logo.pdf}\hspace*{4.75cm}~%
-%    \includegraphics[width=2cm]{fig/elec_logo.pdf}
-% }
+\logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}}
 
-\logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{fig/elec_logo.pdf}}}} 
-
-\date[UWC 06/2024] % (optional, should be abbreviation of conference name)
+\date[BIUST 03/2025] % (optional, should be abbreviation of conference name)
 {}
-
-% \addtobeamertemplate{headline}{}{%
-% \begin{textblock*}{100mm}(0.87\textwidth,2mm)
-% \includegraphics[height=1.5cm]{elec_logo.pdf}
-% \end{textblock*}}
 
 \begin{document}
 
@@ -228,6 +220,7 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
       \item Rhodes, ZA
       \item Stellenbosch, ZA
       \item SARAO, ZA
+      \item AlphaWave, ZA
       \item Volunteers from industry
     \end{itemize}
   \end{column}
@@ -262,6 +255,71 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 \end{frame}
 
 
+
+\section{TART 3: MeerTART\texttrademark}
+
+\frame{\tableofcontents[currentsection]}
+
+
+\begin{frame}{TART-3 Electronics}
+ \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
+\end{frame}
+
+\begin{frame}{TART-3 Features}
+ \begin{columns}
+  \begin{column}{0.4\linewidth}
+    \begin{itemize}
+    \item 32-Antennas (276 $\rightarrow$ 496 Visibilities)
+    \item New Correlator will support up to 64 Antennas!
+    \item 2-bit data!
+    \item New radios: $10 \times$ bandwidth
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.6\linewidth}
+    \includegraphics[width=\linewidth]{fig/tart3.jpg}
+  \end{column}
+\end{columns}
+\pause
+    \begin{block}{Sensitivity}
+Sensitivity increase of ~$20 \times$
+    \end{block}
+    \begin{block}{Reliability}
+Simplified wiring. Much easier installation. Easier to maintain.
+    \end{block}
+\end{frame}
+
+
+
+\begin{frame}{Upgraded Radios, late 2025}
+  \begin{columns}
+  \begin{column}{0.4\linewidth}
+    \includegraphics[width=\linewidth]{fig/max2771.png}
+  \end{column}
+  \begin{column}{0.6\linewidth}
+  New Radio Front End.
+\begin{itemize}
+ \item 10x bandwidth (26 MHz)
+ \item Zero IF operation
+ \item 1160-1290 MHz and 1525-1610 MHz bands
+ \item New radio module, will plug into existing TARTs.
+\end{itemize}
+
+  \end{column}
+  \end{columns}
+\end{frame}
+
+\begin{frame}{Upgraded Array Layouts}
+ Use machine learning frameworks to optimize antenna layouts:
+
+ \includegraphics[width=\linewidth]{fig/spiral6_24.pdf}
+
+ That minimize the condition number or entropy of $\mathbf{T}$ the telescope operator $\overrightarrow{\mathbf{v}} = \mathbf{T} \overrightarrow{\mathbf{s}}$.
+
+     \begin{block}{Reliability}
+Hidden cables. Much easier installation. Ideal for workshops.
+    \end{block}
+
+\end{frame}
 
 \section{Calibration Imaging \& Data}
 
@@ -435,71 +493,6 @@ TART data and control are done throught a web-based API.
    \includegraphics[width=0.71\linewidth]{fig/workshop-partners.png}
 \end{frame}
 
-
-\section{TART upgrades: MeerTART\texttrademark}
-
-\frame{\tableofcontents[currentsection]}
-
-
-\begin{frame}{TART-3 Electronics}
- \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
-\end{frame}
-
-\begin{frame}{TART-3 Features}
- \begin{columns}
-  \begin{column}{0.4\linewidth}
-    \begin{itemize}
-    \item 32-Antennas (276 $\rightarrow$ 496 Visibilities)
-    \item New Correlator will support up to 64 Antennas!
-    \item 2-bit data!
-    \item New radios: $10 \times$ bandwidth
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-    \includegraphics[width=\linewidth]{fig/tart3.jpg}
-  \end{column}
-\end{columns}
-\pause
-    \begin{block}{Sensitivity}
-Sensitivity increase of ~$20 \times$
-    \end{block}
-    \begin{block}{Reliability}
-Simplified wiring. Much easier installation. Easier to maintain.
-    \end{block}
-\end{frame}
-
-
-
-\begin{frame}{Upgraded Radios, late 2024}
-  \begin{columns}
-  \begin{column}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{fig/max2771.png}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-  New Radio Front End.
-\begin{itemize}
- \item 10x bandwidth (26 MHz)
- \item Zero IF operation
- \item 1160-1290 MHz and 1525-1610 MHz bands
- \item New radio module, will plug into existing TARTs.
-\end{itemize}
-
-  \end{column}
-  \end{columns}
-\end{frame} 
-
-\begin{frame}{Upgraded Array Layouts}
- Use machine learning frameworks to optimize antenna layouts:
- 
- \includegraphics[width=\linewidth]{fig/spiral6_24.pdf}
- 
- That minimize the condition number or entropy of $\mathbf{T}$ the telescope operator $\overrightarrow{\mathbf{v}} = \mathbf{T} \overrightarrow{\mathbf{s}}$.
- 
-     \begin{block}{Reliability}
-Hidden cables. Much easier installation. Ideal for workshops.
-    \end{block}
-
-\end{frame}
 
 
 \begin{frame}{What the future holds}
