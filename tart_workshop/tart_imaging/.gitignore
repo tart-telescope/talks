@@ -1,0 +1,4 @@
+*.deps
+logs
+*.txt
+*.log
