@@ -20,7 +20,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART Imaging]{Imaging with the TART: Getting the tools}
+\title[TART Imaging]{Imaging with TART Part 1: Getting the tools}
 
 \author[Molteno]{Tim Molteno}
 
@@ -75,7 +75,7 @@
 
 \begin{frame}[fragile]{TART Tools}
 %    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
-  The TART software for imaging run in an environment called stimela. This is the software framework for the worlds largest radio telescopes.
+  The TART software for imaging run in an environment called \href{https://github.com/caracal-pipeline/stimela}{stimela}. This is the software framework for the worlds largest radio telescopes.
 
   \begin{block}{Install}
   \begin{verbatim}
@@ -85,8 +85,8 @@
 
   Notes:
   \begin{itemize}
-   \item This should work on linus and windows (WSL2).
-   \item Probably not on apples. Run a linux virtual machine.
+   \item Should work on Linux and windows (WSL2).
+   \item On a mac? Run a linux virtual machine.
   \end{itemize}
    \begin{block}{Homework}
    Please do this right away, and run a test script (see later), so we can use it tomorrow.
@@ -111,13 +111,42 @@ There is a sample recipe that should also be run:
 
 \begin{frame}{Output}
 \begin{columns}
- \begin{column}{0.6\linewidth}
+ \begin{column}{0.7\linewidth}
 \includegraphics[width=\linewidth]{images/obs_00000.hdf.png}
  \end{column}
- \begin{column}{0.4\linewidth}
-  A round image!
+ \begin{column}{0.3\linewidth}
+ \begin{itemize}
+  \item Known sources circled.
+  \item Round!
+ \end{itemize}
  \end{column}
 \end{columns}
+\end{frame}
+
+
+\begin{frame}[fragile]{CASA Tools}
+%    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
+  \href{https://github.com/caracal-pipeline/cult-cargo}{Cult-Cargo} is a suite of tools written by the radio astronomy community. Useful for making square images.
+
+  \begin{block}{Install}
+  \begin{verbatim}
+   pip install cult-cargo
+  \end{verbatim}
+  \end{block}
+
+  Notes:
+  \begin{itemize}
+   \item Should work on Linux and windows (WSL2).
+   \item On Apple hardware, run a linux virtual machine.
+  \end{itemize}
+   \begin{block}{Homework}
+   Download the test data from the google drive, and the script called 'full-tart-imaging.yml'
+  \begin{verbatim}
+   stimela run full-tart-imaging.yml
+  \end{verbatim}
+
+   \end{block}
+
 \end{frame}
 
 \section{What is going on behind the scenes}
@@ -133,12 +162,12 @@ There is a sample recipe that should also be run:
 \frametitle{TART API: Access data from anywhere}
 TART data and control are done throught a web-based API. 
 
-\centering{\url{https://api.elec.ac.nz/tart/tart-kenya/}}
+\centering{\url{https://api.elec.ac.nz/tart/bw-biust/}}
 
 \begin{lstlisting}[language=Python, frame=single, basicstyle=\footnotesize]
  import requests
  
- api_endpoint = "https://api.elec.ac.nz/tart/tart-kenya/api/"
+ api_endpoint = "https://api.elec.ac.nz/tart/bw-biust/api/"
  r = requests.get(api_endpoint + "/v1/imaging/vis")
  print(r.json())
 \end{lstlisting}
