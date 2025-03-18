@@ -11,6 +11,16 @@
 
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
+\lstdefinestyle{yaml}{
+     basicstyle=\color{blue}\tiny,
+     rulecolor=\color{black},
+     string=[s]{'}{'},
+     stringstyle=\color{blue},
+     comment=[l]{:},
+     commentstyle=\color{black},
+     morecomment=[l]{-}
+ }
+
 \usetheme{Boadilla}
 \usefonttheme{serif}
 % \mode<presentation>
@@ -25,7 +35,7 @@
 \author[Molteno]{Tim Molteno}
 
 \institute[Otago]
-{
+{1
   Electronics Research Foundation \\
   \& \\
   Department of Physics,
@@ -67,7 +77,41 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
-% \section{Origins of TART}
+\begin{frame}[fragile]{Stimela: Recipes for processing data}
+
+\begin{lstlisting}[style=yaml]
+tart-image:
+    steps:
+        create-ms:
+            cab: tart2ms
+            params:
+                hdf: =recipe.hdf
+                ms: =recipe.ms
+                clobber: true
+                single-field: true
+                rephase: obs-midpoint
+
+        disko-image:
+            cab: disko
+            params:
+                ms: =recipe.ms
+                HDF: =recipe.sphere
+                healpix: true
+                fov: 170deg
+                res: 0.5deg
+                lasso: true
+                alpha: 0.006
+                l1-ratio: 0.02
+
+        project-image:
+            cab: disko-draw
+            params:
+                hdf: =recipe.sphere
+                show-sources: true
+                SVG: =recipe.svg
+\end{lstlisting}
+\end{frame}
+\section{TART Tools}
 
 \begin{frame}[fragile]{TART Tools}
 %    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
@@ -85,7 +129,7 @@
    \item On a mac? Run a linux virtual machine.
   \end{itemize}
    \begin{block}{Homework}
-   Please do this right away, and run a test script (see later), so we can use it tomorrow.
+   Grab your laptop and try, and run a test script (see later), so we can use it tomorrow.
    \end{block}
 
 \end{frame}
@@ -119,6 +163,7 @@ There is a sample recipe that should also be run:
 \end{columns}
 \end{frame}
 
+\section{CASA tools}
 
 \begin{frame}[fragile]{CASA Tools}
 %    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
@@ -158,7 +203,7 @@ There is a sample recipe that should also be run:
 \frametitle{TART API: Access data from anywhere}
 TART data and control are done throught a web-based API. 
 
-\centering{\url{https://api.elec.ac.nz/tart/bw-biust/}}
+\centering{\url{https://api.elec.ac.nz/tart/tart-kenya/}}
 
 \begin{lstlisting}[language=Python, frame=single, basicstyle=\footnotesize]
  import requests
