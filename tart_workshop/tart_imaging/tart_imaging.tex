@@ -30,12 +30,12 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART Imaging]{Imaging with TART Part 1: Getting the tools}
+\title[TART Imaging]{Lazy imaging: the easiest way to make images}
 
 \author[Molteno]{Tim Molteno}
 
 \institute[Otago]
-{1
+{
   Electronics Research Foundation \\
   \& \\
   Department of Physics,
@@ -64,18 +64,22 @@
   \titlepage
 \end{frame}
  
-\begin{frame}
-\vspace{1cm}
-
-  \includegraphics[width=\linewidth]{../tart_overview/fig/spiral.jpeg}\\
-  \centering{A TART radio telescope under construction in Mauritius}
-\end{frame}
-
+% \begin{frame}
+% \vspace{1cm}
+%   \includegraphics[width=\linewidth]{../tart_overview/fig/spiral.jpeg}\\
+%   \centering{A TART radio telescope under construction in Mauritius}
+% \end{frame}
+%
 
 \begin{frame}
   \tableofcontents
   % You might wish to add the option [pausesections]
 \end{frame}
+
+
+\section{Installing the Tools}
+
+\subsection{Stimela}
 
 \begin{frame}[fragile]{Stimela: Recipes for processing data}
 
@@ -111,7 +115,7 @@ tart-image:
                 SVG: =recipe.svg
 \end{lstlisting}
 \end{frame}
-\section{TART Tools}
+\subsection{TART Tools}
 
 \begin{frame}[fragile]{TART Tools}
 %    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
@@ -139,7 +143,7 @@ tart-image:
 There is a sample recipe that should also be run:
 \begin{itemize}
  \item Download it from \url{https://github.com/tart-telescope/tart_cargo}
- \item In test/example-recipe.yml.
+ \item In \verb!test/example-recipe.yml!
 \end{itemize}
 \begin{block}{Run It}
  \begin{verbatim}
@@ -163,37 +167,10 @@ There is a sample recipe that should also be run:
 \end{columns}
 \end{frame}
 
-\section{CASA tools}
 
-\begin{frame}[fragile]{CASA Tools}
-%    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
-  \href{https://github.com/caracal-pipeline/cult-cargo}{Cult-Cargo} is a suite of tools written by the radio astronomy community. Useful for making square images.
-
-  \begin{block}{Install}
-  \begin{verbatim}
-   pip install cult-cargo
-  \end{verbatim}
-  \end{block}
-
-  Notes:
-  \begin{itemize}
-   \item Should work on Linux and windows (WSL2).
-   \item On Apple hardware, run a linux virtual machine.
-  \end{itemize}
-   \begin{block}{Homework}
-   Download the test data from the google drive, and the script called 'full-tart-imaging.yml'
-  \begin{verbatim}
-   stimela run full-tart-imaging.yml
-  \end{verbatim}
-
-   \end{block}
-
-\end{frame}
-
-\section{What is going on behind the scenes}
+\subsection{What is going on behind the scenes}
 
 \frame{\tableofcontents[currentsection]}
-
 
 \begin{frame}
  \includegraphics[width=\linewidth]{../tart_overview/fig/browser_view.png}
@@ -204,36 +181,123 @@ There is a sample recipe that should also be run:
 TART data and control are done throught a web-based API. 
 
 \centering{\url{https://api.elec.ac.nz/tart/tart-kenya/}}
-
-\begin{lstlisting}[language=Python, frame=single, basicstyle=\footnotesize]
- import requests
- 
- api_endpoint = "https://api.elec.ac.nz/tart/bw-biust/api/"
- r = requests.get(api_endpoint + "/v1/imaging/vis")
- print(r.json())
-\end{lstlisting}
+%
+% \begin{lstlisting}[language=Python, frame=single, basicstyle=\footnotesize]
+%  import requests
+%
+%  api_endpoint = "https://api.elec.ac.nz/tart/bw-biust/api/"
+%  r = requests.get(api_endpoint + "/v1/imaging/vis")
+%  print(r.json())
+% \end{lstlisting}
 
 \end{frame}
 
-% \begin{frame}{Synthesis Imaging}
-% Measure complex visibility $V_{ij}$ by correlating signals from antenna $i$ and $j$.
-% \[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
-% \begin{columns}
-%  \begin{column}{0.55\linewidth}
-% \begin{enumerate}
-%  \item 276 Pairs of antennas
-%  \item 16.368 MHz sampling rate per antenna
-%  \item Real-time correlation in FPGA
-%  \item 4.5 Giga MAC per second
-%  \item T $\sim$ 1 second
-% \end{enumerate}
-%  \end{column}
-%  \begin{column}{0.45\linewidth}
-%  \includegraphics[width=\linewidth]{fig/papilio_pro.jpg}
-%  \end{column}
-% \end{columns}
-% 
-% \end{frame}
+\section{Visibilities: What are they}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Synthesis Imaging}
+
+Measure complex visibility $V_{ij}$ by correlating signals from antenna $i$ and $j$.
+\[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
+\begin{columns}
+ \begin{column}{0.55\linewidth}
+\begin{block}{Really}
+  Yes, just multiplication and averaging
+\end{block}
+\begin{enumerate}
+ \item 276 Pairs of antennas
+ \item 16.368 MHz sampling rate per antenna
+ \item Real-time correlation in FPGA
+  \item 4.5 Giga MAC per second
+ \item T $\sim$ 1 second
+\end{enumerate}
+ \end{column}
+ \begin{column}{0.45\linewidth}
+   \includegraphics[width=\linewidth]{../tart_overview/fig/papilio_pro.jpg}
+ \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+Point sources make plane waves...
+ \begin{eqnarray*}
+E_i & = & A e^{i (k r - \omega t)} \\
+E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
+    & = & A e^{ikr} e^{ik d r} e^{-i \omega t}e^{-i \omega d t} = E_i e^{i (k dr - \omega dt)}
+ \end{eqnarray*}
+ \begin{eqnarray*}
+  V_{ij} & = & \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \\
+   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} E_i^{\star} e^{-i (k dr - \omega dt)} dt \\
+   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} A e^{-i (k r - \omega t)}  e^{-i (k dr - \omega dt)} \\
+   & = & A^2 \frac{1}{T} \int_0^T e^{-i (k dr - \omega dt)} = A^2 e^{-i (k dr - \omega dt)}
+ \end{eqnarray*}
+ \begin{block}{Yep its that simple}
+  Visibilities depend on the intensity of the source ($A^2$), and the phase difference (depends on angle and baseline length)
+ \end{block}
+\end{frame}
+
+\begin{frame}{Exactly how?}
+Well its geometry. A bit of diagram drawing gives.
+ \[ V_{i,j} = A^2 e^{2 i \pi \left(\delta x \sin{\left(\phi_{0} \right)} \sin{\left(\theta_{0} \right)} + \Delta y \sin{\left(\theta_{0} \right)} \cos{\left(\phi_{0} \right)} + \Delta z \cos{\left(\theta_{0} \right)}\right)}  \]
+ where:
+ \begin{itemize}
+  \item $\Delta x$ is the distance between antennas in $x$
+  \item $\Delta y$ is the distance between antennas in $y$
+  \item $\Delta z$ is the distance between antennas in $z$ (usually zero)
+  \item We know these and they don't change
+ \end{itemize}
+ \begin{block}{Astronomers}
+  They don't like $\Delta x$,$\Delta y$ so they call them the $u-v$ plane.
+ \end{block}
+\end{frame}
+
+\begin{frame}
+\begin{columns}
+ \begin{column}{0.3\linewidth}
+  Move a source around: plot the visibility.
+  \begin{block}{Quiz}
+   Where are the baselines?
+  \end{block}
+\end{column}
+ \begin{column}{0.7\linewidth}
+  \begin{center}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
+  \end{center}
+ \end{column}
+\end{columns}
+\end{frame}
+
+
+\section{Imaging is now easy}
+
+\begin{frame}{Imaging}
+ Imaging: work out where the sources are from 276 measured visibilities. So solve 276 equations to work out the sky.
+ \begin{itemize}
+ \item If the sky has 5 unknown point sources, we are totally OK.
+  \item If the sky is an image, we have 1 million unknown pixels.
+  \item If we only have 276 equations and 1 million unknowns, we have to make assumptions.
+ \end{itemize}
+\begin{block}{Can we use least squares?}
+ Yes, but we still have to use assumptions.
+\end{block}
+\begin{block}{What kind of assumptions?}
+ We could pretend that there are millions of unmeasured visibilities. And that these are all zero.
+\end{block}
+\end{frame}
+
+\begin{frame}{Lets try it}
+\includegraphics[width=\linewidth]{images/demo-time.jpg}
+\end{frame}
+
+
+\begin{frame}{Calibration}
+ This is dark magic. Ben and Oleg are the experts. This is where all the work goes in on real telescopes.
+\end{frame}
 % 
 % \begin{frame}{Synthesis Continued...}
 % Fourier transform relationship between radio sky brightness $I(l,m)$ and
@@ -252,23 +316,21 @@ TART data and control are done throught a web-based API.
 % \section{Expected \& Unexpected Results}
 
 
-\begin{frame}{What the future holds}
+\begin{frame}{Conclusions}
  \begin{columns}
   \begin{column}{0.6\linewidth}
     \begin{itemize}
-    \item TART 4.0?
-    \item Transient event detection
-    \item More workshops! Bangaladesh, Morrocco, Malta, Berkeley
-    \item Automatic tracking of space Debris
-    \item New Array Designs
-    \item New imaging algorithms (Gridless, Direct from Data)
+    \item Imaging isn't too hard.
+    \item Projects ideas: Trying different TART imaging ideas
+    \item Project idea: Use Machine learning!
+    \item More projects: Tools for calibration of arrays.
+    \item More projects: Bigger, more directional antennas.
     \end{itemize}
   \end{column}
   \begin{column}{0.4\linewidth}
     \includegraphics[width=\linewidth]{../tart_overview/fig/tart3.jpg}
   \end{column}
 \end{columns}
-    \pause
     \begin{block}{}
      \begin{center} Questions? \end{center}
     \end{block}
