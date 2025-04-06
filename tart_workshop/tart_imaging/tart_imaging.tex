@@ -77,6 +77,136 @@
 \end{frame}
 
 
+\section{Visibilities: What are they}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Synthesis Imaging}
+
+\begin{block}{What are visibilities?}
+ Just the averages of pairs of signals $E_i(t) \times E_j(t)$.
+\end{block}
+\pause
+\begin{columns}
+ \begin{column}{0.55\linewidth}
+\begin{block}{Really}
+  Yes, just multiplication and averaging
+\[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
+\end{block}
+\begin{enumerate}
+ \item 276 Pairs of antennas
+ \item T $\sim$ 1 second
+ \item Real-time correlation in FPGA
+ \item 4.5 Giga MAC per second
+\end{enumerate}
+ \end{column}
+ \begin{column}{0.45\linewidth}
+   \includegraphics[width=\linewidth]{../tart_overview/fig/papilio_pro.jpg}
+ \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}
+Point sources make plane waves...
+ \begin{eqnarray*}
+E_i & = & A e^{i (k r - \omega t)}, \\
+E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
+    & = & A e^{ikr} e^{ik d r} e^{-i \omega t}e^{-i \omega d t} = E_i e^{i (k dr - \omega dt)}
+ \end{eqnarray*}
+ \begin{eqnarray*}
+  V_{ij} & = & \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \\
+   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} E_i^{\star} e^{-i (k dr - \omega dt)} dt \\
+   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} A e^{-i (k r - \omega t)}  e^{-i (k dr - \omega dt)} \\
+   & = & A^2 \frac{1}{T} \int_0^T e^{-i (k dr - \omega dt)} = A^2 e^{-i (k dr - \omega dt)}
+ \end{eqnarray*}
+ \begin{block}{Yep its that simple}
+  Visibilities depend on the intensity of the source ($A^2$), and the phase difference (depends on angle and baseline length)
+ \end{block}
+\end{frame}
+
+
+\begin{frame}
+\begin{columns}
+ \begin{column}{0.3\linewidth}
+  Move a source around: plot the visibility.
+  \begin{block}{Quiz}
+   Where are the baselines?
+  \end{block}
+\end{column}
+ \begin{column}{0.7\linewidth}
+  \begin{center}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
+  \end{center}
+ \end{column}
+\end{columns}
+\end{frame}
+
+
+\begin{frame}{Visibility, Angles and Spacing}
+Well its geometry. A bit of diagram drawing gives.
+ \begin{eqnarray*} V_{i,j} & = & A^2 e^{2 i \pi \left(\Delta x \sin{\left(\phi_{0} \right)} \sin{\left(\theta_{0} \right)} + \Delta y \sin{\left(\theta_{0} \right)} \cos{\left(\phi_{0} \right)} + \Delta z \cos{\left(\theta_{0} \right)}\right)}  \\
+ & = & A^2 F(\Delta x, \Delta y)(\theta_0, \phi_0)
+ \end{eqnarray*}
+ where:
+ \begin{itemize}
+  \item $\Delta x$ is the distance between antennas in $x$
+  \item $\Delta y$ is the distance between antennas in $y$
+  \item $\Delta z$ is the distance between antennas in $z$ (usually zero)
+  \item We know these and they don't change
+ \end{itemize}
+ \begin{block}{Astronomers}
+  We don't like $\Delta x$,$\Delta y$ so call them $u, v$.
+ \end{block}
+\end{frame}
+
+
+\section{Imaging is now easy}
+
+\begin{frame}{Imaging}
+ Imaging: work out where the sources are from 276 measured visibilities. So solve 276 equations to work out the sky.
+ \begin{itemize}
+ \item If the sky has 5 unknown point sources, we are totally OK.
+  \item If the sky is an image, we have 1 million unknown pixels.
+  \item If we only have 276 equations and 1 million unknowns, we have to make assumptions.
+ \end{itemize}
+\begin{block}{Can we use least squares?}
+ Yes, but we still have to use assumptions.
+\end{block}
+\begin{block}{What kind of assumptions?}
+ We could pretend that there are millions of unmeasured visibilities. And that these are all zero.
+\end{block}
+\end{frame}
+
+\begin{frame}{Lets try it}
+\includegraphics[width=\linewidth]{images/demo-time.jpg}
+\end{frame}
+
+
+% \begin{frame}{Calibration}
+%  This is dark magic. Ben and Oleg are the experts. This is where all the work goes in on real telescopes.
+% \end{frame}
+% 
+% \begin{frame}{Synthesis Continued...}
+% Fourier transform relationship between radio sky brightness $I(l,m)$ and
+% visibility $V(u,v)$,
+% \[
+%   V(u,v) = \int I(l,m) e^{2\pi j(lu  + mv)} dl dm
+% \]
+% Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$, 
+% \[
+%  I(l,m) = \mathscr{F}^{-1}\{V(u,v)\}
+% \]
+% where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair. 
+% \end{frame}
+% 
+
+% \section{Expected \& Unexpected Results}
+
+
 \section{Installing the Tools}
 
 \subsection{Stimela}
@@ -123,18 +253,15 @@ tart-image:
 
   \begin{block}{Install}
   \begin{verbatim}
-   pip install tart-tools
+   pip install tart-cargo
   \end{verbatim}
   \end{block}
 
   Notes:
   \begin{itemize}
-   \item Should work on Linux and windows (WSL2).
+   \item Works on Linux and Windows (WSL2).
    \item On a mac? Run a linux virtual machine.
   \end{itemize}
-   \begin{block}{Homework}
-   Grab your laptop and try, and run a test script (see later), so we can use it tomorrow.
-   \end{block}
 
 \end{frame}
 
@@ -178,7 +305,7 @@ There is a sample recipe that should also be run:
 
 \begin{frame}[containsverbatim]
 \frametitle{TART API: Access data from anywhere}
-TART data and control are done throught a web-based API. 
+TART data and control are done throught a web-based API.
 
 \centering{\url{https://api.elec.ac.nz/tart/tart-kenya/}}
 %
@@ -191,130 +318,6 @@ TART data and control are done throught a web-based API.
 % \end{lstlisting}
 
 \end{frame}
-
-\section{Visibilities: What are they}
-
-\frame{\tableofcontents[currentsection]}
-
-\begin{frame}{Synthesis Imaging}
-
-Measure complex visibility $V_{ij}$ by correlating signals from antenna $i$ and $j$.
-\[ V_{ij} = \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \]
-\begin{columns}
- \begin{column}{0.55\linewidth}
-\begin{block}{Really}
-  Yes, just multiplication and averaging
-\end{block}
-\begin{enumerate}
- \item 276 Pairs of antennas
- \item 16.368 MHz sampling rate per antenna
- \item Real-time correlation in FPGA
-  \item 4.5 Giga MAC per second
- \item T $\sim$ 1 second
-\end{enumerate}
- \end{column}
- \begin{column}{0.45\linewidth}
-   \includegraphics[width=\linewidth]{../tart_overview/fig/papilio_pro.jpg}
- \end{column}
-\end{columns}
-\end{frame}
-
-
-\begin{frame}
-Point sources make plane waves...
- \begin{eqnarray*}
-E_i & = & A e^{i (k r - \omega t)} \\
-E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
-    & = & A e^{ikr} e^{ik d r} e^{-i \omega t}e^{-i \omega d t} = E_i e^{i (k dr - \omega dt)}
- \end{eqnarray*}
- \begin{eqnarray*}
-  V_{ij} & = & \frac{1}{T} \int_0^T E_i(t) E_j^{\star}(t) dt \\
-   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} E_i^{\star} e^{-i (k dr - \omega dt)} dt \\
-   & = & \frac{1}{T} \int_0^T A e^{i (k r - \omega t)} A e^{-i (k r - \omega t)}  e^{-i (k dr - \omega dt)} \\
-   & = & A^2 \frac{1}{T} \int_0^T e^{-i (k dr - \omega dt)} = A^2 e^{-i (k dr - \omega dt)}
- \end{eqnarray*}
- \begin{block}{Yep its that simple}
-  Visibilities depend on the intensity of the source ($A^2$), and the phase difference (depends on angle and baseline length)
- \end{block}
-\end{frame}
-
-\begin{frame}{Exactly how?}
-Well its geometry. A bit of diagram drawing gives.
- \[ V_{i,j} = A^2 e^{2 i \pi \left(\delta x \sin{\left(\phi_{0} \right)} \sin{\left(\theta_{0} \right)} + \Delta y \sin{\left(\theta_{0} \right)} \cos{\left(\phi_{0} \right)} + \Delta z \cos{\left(\theta_{0} \right)}\right)}  \]
- where:
- \begin{itemize}
-  \item $\Delta x$ is the distance between antennas in $x$
-  \item $\Delta y$ is the distance between antennas in $y$
-  \item $\Delta z$ is the distance between antennas in $z$ (usually zero)
-  \item We know these and they don't change
- \end{itemize}
- \begin{block}{Astronomers}
-  They don't like $\Delta x$,$\Delta y$ so they call them the $u-v$ plane.
- \end{block}
-\end{frame}
-
-\begin{frame}
-\begin{columns}
- \begin{column}{0.3\linewidth}
-  Move a source around: plot the visibility.
-  \begin{block}{Quiz}
-   Where are the baselines?
-  \end{block}
-\end{column}
- \begin{column}{0.7\linewidth}
-  \begin{center}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
-  \end{center}
- \end{column}
-\end{columns}
-\end{frame}
-
-
-\section{Imaging is now easy}
-
-\begin{frame}{Imaging}
- Imaging: work out where the sources are from 276 measured visibilities. So solve 276 equations to work out the sky.
- \begin{itemize}
- \item If the sky has 5 unknown point sources, we are totally OK.
-  \item If the sky is an image, we have 1 million unknown pixels.
-  \item If we only have 276 equations and 1 million unknowns, we have to make assumptions.
- \end{itemize}
-\begin{block}{Can we use least squares?}
- Yes, but we still have to use assumptions.
-\end{block}
-\begin{block}{What kind of assumptions?}
- We could pretend that there are millions of unmeasured visibilities. And that these are all zero.
-\end{block}
-\end{frame}
-
-\begin{frame}{Lets try it}
-\includegraphics[width=\linewidth]{images/demo-time.jpg}
-\end{frame}
-
-
-\begin{frame}{Calibration}
- This is dark magic. Ben and Oleg are the experts. This is where all the work goes in on real telescopes.
-\end{frame}
-% 
-% \begin{frame}{Synthesis Continued...}
-% Fourier transform relationship between radio sky brightness $I(l,m)$ and
-% visibility $V(u,v)$,
-% \[
-%   V(u,v) = \int I(l,m) e^{2\pi j(lu  + mv)} dl dm
-% \]
-% Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$, 
-% \[
-%  I(l,m) = \mathscr{F}^{-1}\{V(u,v)\}
-% \]
-% where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair. 
-% \end{frame}
-% 
-
-% \section{Expected \& Unexpected Results}
-
 
 \begin{frame}{Conclusions}
  \begin{columns}
