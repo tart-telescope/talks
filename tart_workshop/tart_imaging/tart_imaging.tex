@@ -30,7 +30,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART Imaging]{Lazy imaging: the easiest way to make images}
+\title[TART Imaging]{Imaging. A Visual Explanation (with TART)}
 
 \author[Molteno]{Tim Molteno}
 
@@ -48,7 +48,7 @@
 
 \logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}}
 
-\date[BIUST 03/2025] % (optional, should be abbreviation of conference name)
+\date[NASSP 04/2025] % (optional, should be abbreviation of conference name)
 {}
 
 % \addtobeamertemplate{headline}{}{%
@@ -84,7 +84,7 @@
 \begin{frame}{Synthesis Imaging}
 
 \begin{block}{What are visibilities?}
- Just the averages of pairs of signals $E_i(t) \times E_j(t)$.
+ Just the averages of the product of pairs of signals $E_i(t) \times E_j(t)$.
 \end{block}
 \pause
 \begin{columns}
@@ -108,7 +108,7 @@
 
 
 \begin{frame}
-Point sources make plane waves...
+Point sources make plane waves. Received as voltages...
  \begin{eqnarray*}
 E_i & = & A e^{i (k r - \omega t)}, \\
 E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
@@ -153,9 +153,9 @@ Well its geometry. A bit of diagram drawing gives.
  \end{eqnarray*}
  where:
  \begin{itemize}
-  \item $\Delta x$ is the distance between antennas in $x$
-  \item $\Delta y$ is the distance between antennas in $y$
-  \item $\Delta z$ is the distance between antennas in $z$ (usually zero)
+  \item $\Delta x_{ij}$ is the distance between antenna in $x$
+  \item $\Delta y_{ij}$ is the distance between antennas in $y$
+  \item $\Delta z_{ij}$ is the distance between antennas in $z$ (usually zero)
   \item We know these and they don't change
  \end{itemize}
  \begin{block}{Astronomers}
@@ -164,7 +164,79 @@ Well its geometry. A bit of diagram drawing gives.
 \end{frame}
 
 
+\begin{frame}
+\begin{columns}
+ \begin{column}{0.3\linewidth}
+  \begin{block}{Fringes}
+   One for each baseline?
+  \end{block}
+  \[ F_{ij}(\theta, \phi) \]
+\end{column}
+ \begin{column}{0.7\linewidth}
+  \begin{center}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
+  \end{center}
+ \end{column}
+\end{columns}
+\end{frame}
+
+\begin{frame}{All TART Fringes}
+  \includegraphics[width=\linewidth]{images/all_fringes.png}
+\end{frame}
+
 \section{Imaging is now easy}
+
+\frame{\tableofcontents[currentsection]}
+
+\begin{frame}{Ridiculously Simple}
+ \[ S(\theta, \phi) = \sum_{i,j} V_{ij} F_{ij}(\theta, \phi)\]
+ \begin{block}{Add em up}
+  The sky is the sum of the fringes multiplied by the visibility.
+ \end{block}
+\end{frame}
+
+\begin{frame}{Adding fringes}
+\begin{minipage}{\linewidth}
+  \centering
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_1.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/sum_1.png}}
+\end{minipage}
+\begin{minipage}{\linewidth}
+  \centering
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_2.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/sum_2.png}}
+\end{minipage}
+\begin{minipage}{\linewidth}
+  \centering
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_2.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_3.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_4.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_5.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/sum_5.png}}
+\end{minipage}
+\begin{minipage}{\linewidth}
+  \centering
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_2.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_3.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_4.png}} \ldots
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_51.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/sum_51.png}}
+\end{minipage}
+\begin{minipage}{\linewidth}
+\centering
+\includegraphics[height=2cm]{images/harmonics/sum_275.png}
+\end{minipage}
+\end{frame}
 
 \begin{frame}{Imaging}
  Imaging: work out where the sources are from 276 measured visibilities. So solve 276 equations to work out the sky.
@@ -207,9 +279,7 @@ Well its geometry. A bit of diagram drawing gives.
 % \section{Expected \& Unexpected Results}
 
 
-\section{Installing the Tools}
-
-\subsection{Stimela}
+\section{Stimela pipeline for TART}
 
 \begin{frame}[fragile]{Stimela: Recipes for processing data}
 
@@ -245,9 +315,9 @@ tart-image:
                 SVG: =recipe.svg
 \end{lstlisting}
 \end{frame}
-\subsection{TART Tools}
+\subsection{TART Cargo}
 
-\begin{frame}[fragile]{TART Tools}
+\begin{frame}[fragile]{TART Cargo}
 %    \includegraphics[width=\linewidth]{fig/albatross_frame.png}
   The TART software for imaging run in an environment called \href{https://github.com/caracal-pipeline/stimela}{stimela}. This is the software framework for the worlds largest radio telescopes.
 
@@ -277,7 +347,7 @@ There is a sample recipe that should also be run:
   stimela run example_recipe.yml tart=tart-kenya
  \end{verbatim}
 \end{block}
- The first time this is run, it will take a long time and download a large docker image. Roughly 1 GB!
+ The first time this is run, it will take a while and download a ~1GB docker image.
 \end{frame}
 
 \begin{frame}{Output}
