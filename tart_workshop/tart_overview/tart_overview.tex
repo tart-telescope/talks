@@ -20,7 +20,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART]{The Transient Array Radio Telescope (TART): An overview}
+\title[TART]{The Transient Array Radio Telescope}
 \author[Molteno]{Tim Molteno}
 
 \institute[Otago]
@@ -37,7 +37,7 @@
 
 \logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}}
 
-\date[CbU June 2025] % (optional, should be abbreviation of conference name)
+\date[Ghana Aug 2025] % (optional, should be abbreviation of conference name)
 {}
 
 \begin{document}
@@ -52,7 +52,7 @@
 \vspace{1cm}
 
   \includegraphics[width=\linewidth]{fig/biust_from_above.jpg}\\
-  \centering{BIUST TART final calibration. Yesterday!}
+  \centering{BIUST (Botswana) TART final calibration.}
 \end{frame}
 
 % \begin{frame}{Abstract}
@@ -64,22 +64,45 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
-\section{Goals of this workshop}
+\section{Origins}
 
+\begin{frame}
+\includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
+\begin{block}{SKA, MeerKAT, ASKAP, VLA \& GMRT}
+\begin{itemize}
+\item Incredibly sensitive, narrow field of view
+\item Total cost: billions
+\item Running cost: millions
+\item A long queue of eager astronomers...
+\end{itemize}\end{block}
+\begin{block}{TART}
+ Massive field of view. Look everywhere at once. Transients.
+\end{block}
+\end{frame}
+
+\begin{frame}{TART: Early Prototype}
+   \includegraphics[width=\linewidth]{fig/albatross_frame.png}
+\end{frame}
+%
+
+
+\begin{frame}{TART: The network}
+   \includegraphics[width=\linewidth]{fig/web_map.png}
+\end{frame}
+
+\begin{frame}
+   \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
+\end{frame}
 % \begin{frame}{Goals of the workshop}
 % \begin{}
 %
 % \end{frame}
 % \section{Origins of TART}
 
-\begin{frame}{TART: Single-Dish Engineering Prototype}
-   \includegraphics[width=\linewidth]{fig/albatross_frame.png}
-\end{frame}
-
-\begin{frame}{TART: Evaluation}
-   \includegraphics[width=\linewidth]{fig/project_map_14.png}
-\end{frame}
-
+% \begin{frame}{TART: Evaluation}
+%    \includegraphics[width=\linewidth]{fig/project_map_14.png}
+% \end{frame}
+%
 
 %  \begin{columns}
 %   \begin{column}{0.5\linewidth}
@@ -109,47 +132,30 @@
 % \end{frame}
 
 
-\begin{frame}{MeerKAT: Africa is a world-leader in radio astronomy}
-\begin{center}
-  \includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
-\end{center}
-\begin{itemize}
- \item 13.5 meter antennas. 143 $m^2$
- \item 64 of them!
- \item Frequency Range: 900 MHz - 1670 MHz
- \item SKA pathfinder
-\end{itemize}
-
-\end{frame}
+% \begin{frame}{MeerKAT: Africa is a world-leader in radio astronomy}
+% \begin{center}
+%   \includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
+% \end{center}
+% \begin{itemize}
+%  \item 13.5 meter antennas. 143 $m^2$
+%  \item 64 of them!
+%  \item Frequency Range: 900 MHz - 1670 MHz
+%  \item SKA pathfinder
+% \end{itemize}
+%
+% \end{frame}
 
 
 % \begin{frame}{MeerKAT: The Centre of our Galaxy}
 %  \begin{center}
 %   \includegraphics[width=\linewidth]{fig/MeerKAT_GalacticCentre_image.jpeg}
 %  \end{center}
-% 
+%
 % \end{frame}
 
 
-\begin{frame}{MeerKAT: It's very precious}
-MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
-\begin{itemize}
-\item Beautiful engineering
-\item Total cost: billions
-\item Running cost: millions
-\item A long queue of eager astronomers...
-\end{itemize}
 
-\begin{block}{STEM research}
- Testing new ideas is almost impossible.
-\end{block}
-
-\includegraphics[width=0.32\linewidth]{fig/ska-logo-color.pdf}
-\includegraphics[width=0.32\linewidth]{fig/NRF_SARAO_sm1.png}
-\includegraphics[width=0.32\linewidth]{fig/ska-partners.png}
-\end{frame}
-
-\section{TART: A telescope designed for research}
+\section{Instrument Design}
 
 \frame{\tableofcontents[currentsection]}
 
@@ -165,7 +171,7 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 
 
 
-\begin{frame}{TART-2: Overview}
+\begin{frame}{TART: Overview}
    \includegraphics[width=\textwidth]{fig/drone_view_rhodes.jpg}
    \centering{all-sky  $\cdot$ 24 antennas $\cdot$ real-time $\cdot$ open-source $\cdot$ imaging interferometer } 
 \end{frame}
@@ -190,6 +196,10 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 \mode<all>{\usebackgroundtemplate{}}
 
 
+\begin{frame}{Real-time, all-sky radio telescope}
+ \includegraphics[width=\textwidth]{fig/browser_view.png}
+\end{frame}
+
 \subsection*{Open Source}
 
 
@@ -209,7 +219,7 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 %   \includegraphics[width=\linewidth]{fig/rhodes_news_sa.jpg}
 % \end{frame}
 
-\begin{frame}{TART is open-source}
+\begin{frame}{Open-source design}
   \centering\url{https://github.com/tart-telescope}
  \begin{columns}
   \begin{column}{0.4\linewidth}
@@ -226,8 +236,7 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
       \item Rhodes, ZA
       \item Stellenbosch, ZA
       \item SARAO, ZA
-      \item AlphaWave, ZA
-      \item Volunteers from industry
+      \item EMSS Antennas, ZA
     \end{itemize}
   \end{column}
   \begin{column}{0.6\linewidth}
@@ -237,11 +246,35 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 \end{frame}
 
  
-\begin{frame}{TART-2 components}
-  \includegraphics[width=\linewidth]{fig/tart_overview.pdf}
+
+
+\begin{frame}{TART Electronics}
+ \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
 \end{frame}
 
-
+\begin{frame}{TART Features}
+ \begin{columns}
+  \begin{column}{0.4\linewidth}
+    \begin{itemize}
+    \item 24-Radio Receivers
+    \item Correlator works in real time!
+    \item Each radio: 2.5 MHz bandwidth
+    \item Real-time visibilities
+    \item Stored in the cloud
+    \end{itemize}
+  \end{column}
+  \begin{column}{0.6\linewidth}
+    \includegraphics[width=\linewidth]{fig/tart3.jpg}
+  \end{column}
+\end{columns}
+\pause
+    \begin{block}{Field of View}
+20 thousand square degrees.
+    \end{block}
+    \begin{block}{New Developments}
+The hardware is constantly being developed.
+    \end{block}
+\end{frame}
 
 \begin{frame}{GPS receiver chips}
  \begin{columns}
@@ -261,37 +294,7 @@ MeerKAT \& ASKAP \& VLA \& GMRS are amazing radio telescopes
 \end{frame}
 
 
-
-\begin{frame}{TART-3 Electronics}
- \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
-\end{frame}
-
-\begin{frame}{TART-3 Features}
- \begin{columns}
-  \begin{column}{0.4\linewidth}
-    \begin{itemize}
-    \item 32-Antennas (276 $\rightarrow$ 496 Visibilities)
-    \item New Correlator will support up to 64 Antennas!
-    \item 2-bit data!
-    \item New radios: $10 \times$ bandwidth
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-    \includegraphics[width=\linewidth]{fig/tart3.jpg}
-  \end{column}
-\end{columns}
-\pause
-    \begin{block}{Sensitivity}
-Sensitivity increase of ~$20 \times$
-    \end{block}
-    \begin{block}{Reliability}
-Simplified wiring. Much easier installation. Easier to maintain.
-    \end{block}
-\end{frame}
-
-
-
-\begin{frame}{Upgraded Radios, late 2025}
+\begin{frame}{Upgraded Radios, early 2026}
   \begin{columns}
   \begin{column}{0.4\linewidth}
     \includegraphics[width=\linewidth]{fig/max2771.png}
@@ -304,7 +307,6 @@ Simplified wiring. Much easier installation. Easier to maintain.
  \item 1160-1290 MHz and 1525-1610 MHz bands
  \item New radio module, will plug into existing TARTs.
 \end{itemize}
-
   \end{column}
   \end{columns}
 \end{frame}
@@ -394,14 +396,14 @@ Simplified wiring. Much easier installation. Easier to maintain.
 
 % \section{Expected \& Unexpected Results}
 
-\begin{frame}{Tart Imaging Results}
-\begin{center}
-\includegraphics[width=0.6\linewidth]{fig/tart_snapshot.pdf}\\
- \url{https://tart.elec.ac.nz/old/strange_flyby.webm}
- \end{center}
-\end{frame}
+% \begin{frame}{Tart Imaging Results}
+% \begin{center}
+% \includegraphics[width=0.6\linewidth]{fig/tart_snapshot.pdf}\\
+%  \url{https://tart.elec.ac.nz/old/strange_flyby.webm}
+%  \end{center}
+% \end{frame}
 
-\begin{frame}{UFO}
+\begin{frame}{Fast Unknown Compact Radio Sources}
 \begin{center}
 \includegraphics[width=0.8\linewidth]{fig/elaz.jpg}\\
  Consistent with something in low-earth orbit.
@@ -465,7 +467,7 @@ Simplified wiring. Much easier installation. Easier to maintain.
 % \end{frame}
 
 
-\section{The TART Workshops}
+\section{This TART Workshop}
 
 \frame{\tableofcontents[currentsection]}
 
@@ -476,11 +478,11 @@ Simplified wiring. Much easier installation. Easier to maintain.
   \end{column}
   \begin{column}{0.6\linewidth}
   \begin{itemize}
-   \item Week-long workshops
+   \item Week-long workshop
    \item Mornings: Lectures on radio astronomy
    \item Afternoons: Building a TART
-   \item Collaboration between members
-   \item Including schools (2025 \& 2026)
+   \item Seed Collaborations
+   \item Work with TART data
   \end{itemize}
 \end{column}
  \end{columns} 
@@ -495,9 +497,9 @@ Simplified wiring. Much easier installation. Easier to maintain.
   \begin{column}{0.6\linewidth}
     \begin{itemize}
     \item TART 4.0?
-    \item Transient event detection
-    \item More workshops! Bangaladesh, Morrocco, Malta, Berkeley
-    \item Automatic tracking of space Debris
+    \item Transient event detection. Lightning, cosmic rays.
+    \item More workshops! Bangaladesh, Morrocco, Malta, Oxford, Cambridge, Berkeley, Burkina Faso, Malawi, Rarotonga.
+    \item Automatic tracking of near earth objects
     \item New Array Designs
     \item New imaging algorithms (Gridless, Direct from Data)
     \end{itemize}
@@ -508,7 +510,7 @@ Simplified wiring. Much easier installation. Easier to maintain.
 \end{columns}
     \pause
     \begin{block}{}
-     \begin{center} Questions? \end{center}
+     \begin{center} Thank You! \end{center}
     \end{block}
 
 \end{frame}
