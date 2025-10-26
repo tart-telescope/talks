@@ -12,7 +12,7 @@
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
 \lstdefinestyle{yaml}{
-     basicstyle=\color{blue}\tiny,
+     basicstyle=\ttfamily\color{blue}\tiny,
      rulecolor=\color{black},
      string=[s]{'}{'},
      stringstyle=\color{blue},
@@ -193,8 +193,8 @@ Well its geometry. A bit of diagram drawing gives.
 
 \begin{frame}{Ridiculously Simple}
  \[ S(\theta, \phi) = \sum_{i,j} V_{ij} F_{ij}(\theta, \phi)\]
- \begin{block}{Add em up}
-  The sky is the sum of the fringes multiplied by the visibility.
+ \begin{block}{Just add them up}
+  The sky is the sum of the fringes multiplied by their visibility.
  \end{block}
 \end{frame}
 
@@ -281,38 +281,90 @@ Well its geometry. A bit of diagram drawing gives.
 
 \section{Stimela pipeline for TART}
 
+
+\begin{frame}{Stimela}
+ Modern framework for automating radio astronomy imaging. Describes each steps required to process the data. In our case these are:
+ \begin{enumerate}
+  \item Download data from a TART (mu-udm)
+  \item Create a measurement set
+  \item Image the measurement set
+  \item Write the image to a 2D image format
+ \end{enumerate}
+We describe this using a stimela recipe. Just a text file.
+\begin{block}{Docs}
+\url{https://stimela.readthedocs.io/en/latest/}
+\end{block}
+\end{frame}
+
+
 \begin{frame}[fragile]{Stimela: Recipes for processing data}
 
 \begin{lstlisting}[style=yaml]
+_include:
+    - (tartcargo):
+        - tart2ms.yml
+        - tart-download-data.yml
+        - spotless.yml
+        - disko-draw.yml
+
 tart-image:
+    inputs:
+        tart:
+            dtype: str
+            required: true
+            info: "TART name (e.g. mu-udm)"
+
+    outputs:
+        ms:
+            dtype: MS
+            default:  '{current.tart}.ms'
+        hdf:
+            dtype: File
+            default: '{current.tart}-vis.hdf'
+        svg:
+            dtype: File
+            default: '{current.tart}.svg'
+
+    assign:
+        api: 'https://api.elec.ac.nz/tart/{recipe.tart}'
+
     steps:
+        download-hdf:
+            cab: tart-download-data
+            skip: =EXISTS(recipe.hdf)
+            params:
+                api: =recipe.api
+                vis: true
+                file: =recipe.hdf
+
         create-ms:
             cab: tart2ms
+            skip: =EXISTS(recipe.ms)
             params:
-                hdf: =recipe.hdf
+                hdf: =steps.download-hdf.file
                 ms: =recipe.ms
                 clobber: true
                 single-field: true
                 rephase: obs-midpoint
 
-        disko-image:
-            cab: disko
+        spotless-image:
+            cab: spotless
             params:
                 ms: =recipe.ms
-                HDF: =recipe.sphere
+                HDF: ='{recipe.tart}-spotless.sphere'
+                nvis: 10000
+                multimodel: true
                 healpix: true
                 fov: 170deg
                 res: 0.5deg
-                lasso: true
-                alpha: 0.006
-                l1-ratio: 0.02
 
-        project-image:
+        spotless-draw:
             cab: disko-draw
             params:
-                hdf: =recipe.sphere
+                hdf: ='{recipe.tart}-spotless.sphere'
                 show-sources: true
-                SVG: =recipe.svg
+                scale-mad: true
+                SVG: ='spotless-{recipe.svg}'
 \end{lstlisting}
 \end{frame}
 \subsection{TART Cargo}
