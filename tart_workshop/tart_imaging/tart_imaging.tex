@@ -76,6 +76,36 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
+\section{Synthesis Imaging}
+
+\begin{frame}{Synthesis Imaging}
+\begin{columns}
+ \begin{column}{0.5\linewidth}
+  \includegraphics[width=\linewidth]{images/telescope_array.jpg}
+ \end{column}
+ \begin{column}{0.5\linewidth}
+  \includegraphics[width=\linewidth]{images/radio_image.jpg}
+ \end{column}
+\end{columns}
+The process of building images of the radio sky from many separate radio receivers.
+\end{frame}
+
+\begin{frame}{Synthesis Imaging}
+\begin{columns}
+ \begin{column}{0.5\linewidth}
+  \includegraphics[width=\linewidth]{images/point_source.jpg}
+ \end{column}
+ \begin{column}{0.5\linewidth}
+  \begin{enumerate}
+   \item The signal from a source arrives at one antenna before it arrives at others.
+   \item The visibilty measures the arrival time difference
+   \item As a phase (1 wavelength $\equiv 2 \pi$ phase)
+   \item Each pair of antennas makes 1 measurement
+   \item $N$ antennas $\rightarrow N(N-1)$ pairs.
+  \end{enumerate}
+ \end{column}
+\end{columns}
+\end{frame}
 
 \section{Visibilities: What are they}
 
@@ -84,7 +114,7 @@
 \begin{frame}{Synthesis Imaging}
 
 \begin{block}{What are visibilities?}
- Just the averages of the product of pairs of signals $E_i(t) \times E_j(t)$.
+ Just the averages of the product of pairs of signals $E_i(t) \times E_j^{\star}(t)$.
 \end{block}
 \pause
 \begin{columns}
