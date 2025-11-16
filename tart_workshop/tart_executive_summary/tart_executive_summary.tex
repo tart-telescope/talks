@@ -9,6 +9,8 @@
 \usepackage{gensymb}
 \usepackage{amsmath, mathrsfs}
 
+\graphicspath{ {../tart_overview}{./fig} }
+
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
 \usetheme{Boadilla}
@@ -43,12 +45,37 @@
 
 \begin{document}
 
+
 % Abstract: In this talk I'll give an overview of Africa's newest radio telescope, the TART, recently installed in Mauritius in a joint effort between SARAO, the University of Otago (NZ). I'll talk about TARTs origins, it's design and open-source philosophy as well as the upcoming project to install TART telescopes in the SKA African partner nations. I'll also include some details about improvements that will appear in TART-3, the next version of TART!
 
 \begin{frame}
   \titlepage
 \end{frame}
 
+
+
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/meerkat.jpg}}
+\begin{frame}[plain]
+\end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
+
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/MeerKAT_GalacticCentre_image.jpeg}}
+\begin{frame}[plain]
+\end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
+
+% \begin{frame}{MeerKAT: The Centre of our Galaxy}
+%  \begin{center}
+%   \includegraphics[width=\linewidth]{fig/MeerKAT_GalacticCentre_image.jpeg}
+%  \end{center}
+%
+% \end{frame}
 
 
 \mode<all>
@@ -83,17 +110,17 @@
 \begin{block}{TART}
  Massive field of view. Look everywhere at once. Transients.
 \end{block}
-\end{frame}
+\end{frame}%
 
-\begin{frame}{TART: Early Prototype}
-   \includegraphics[width=\linewidth]{fig/albatross_frame.png}
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{TART_map_bd.png}}
+\begin{frame}[plain]
 \end{frame}
-%
+}
+\mode<all>{\usebackgroundtemplate{}}
 
 
-\begin{frame}{TART: The network}
-   \includegraphics[width=\linewidth]{fig/web_map.png}
-\end{frame}
 
 \begin{frame}
    \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
@@ -162,7 +189,7 @@
 
 \section{Instrument Design}
 
-\frame{\tableofcontents[currentsection]}
+% \frame{\tableofcontents[currentsection]}
 
 % 
 % \begin{frame}
@@ -187,14 +214,6 @@
 \mode<all>
 {
 \usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart_udm_array.jpg}}
-\begin{frame}[plain]
-\end{frame}
-}
-\mode<all>{\usebackgroundtemplate{}}
-
-\mode<all>
-{
-\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart2_wiring_mess.jpg}}
 \begin{frame}[plain]
 \end{frame}
 }
@@ -242,6 +261,7 @@
       \item Stellenbosch, ZA
       \item SARAO, ZA
       \item EMSS Antennas, ZA
+      \item IUB (Bangladesh)
     \end{itemize}
   \end{column}
   \begin{column}{0.6\linewidth}
@@ -251,6 +271,14 @@
 \end{frame}
 
  
+
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/TART_Bangladesh.jpg}}
+\begin{frame}[plain]
+\end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
 
 
 \begin{frame}{TART Electronics}
@@ -281,73 +309,6 @@ The hardware is constantly being developed.
     \end{block}
 \end{frame}
 
-\begin{frame}{GPS receiver chips}
- \begin{columns}
-  \begin{column}{0.5\linewidth}
-    \includegraphics[width=\linewidth]{fig/max_2769.jpg}
-  \end{column}
-  \begin{column}{0.4\linewidth}
-  GPS silicon devices in TART:
-\begin{itemize}
- \item Operates at 1575 MHz (19cm)
- \item Low-cost, widely available
- \item 2.5 MHz bandwidth
- \item 16 millions bits per second
-\end{itemize}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-
-\begin{frame}{Upgraded Radios, early 2026}
-  \begin{columns}
-  \begin{column}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{fig/max2771.png}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-  New Radio Front End.
-\begin{itemize}
- \item 10x bandwidth (26 MHz)
- \item Zero IF operation
- \item 1160-1290 MHz and 1525-1610 MHz bands
- \item New radio module, will plug into existing TARTs.
-\end{itemize}
-  \end{column}
-  \end{columns}
-\end{frame}
-
-\begin{frame}{New Array Layouts}
-\centering
- \includegraphics[width=0.33\linewidth]{fig/top_view.jpg}
- \includegraphics[width=0.54\linewidth]{fig/drone_view_rhodes.jpg}
- \includegraphics[width=0.6\linewidth]{fig/biust_from_above.jpg}
-\end{frame}
-
-\section{Calibration Imaging \& Data}
-
-\frame{\tableofcontents[currentsection]}
-
-
-\begin{frame}{The Calibration Sources}
- \begin{columns}
-  \begin{column}{0.5\linewidth}
-   \includegraphics[height=0.9\textheight]{fig/QZS-1.jpg}
-  \end{column}
-  \begin{column}{0.5\linewidth}
-  \begin{itemize}
-   \item Position known to millimeters
-   \item $>20000$ km away (point sources)
-   \item Signal is `noise-like'
-  \end{itemize}
-   \includegraphics[width=\textwidth]{fig/qzss_ground_track.jpg}
-   {\tiny Image: JAXA}
-  \end{column}
- \end{columns}
-\end{frame}
-
-\begin{frame}
- \includegraphics[width=\linewidth]{fig/browser_view.png}
-\end{frame}
 
 % \begin{frame}[containsverbatim]
 % \frametitle{TART API: Access data from anywhere}
@@ -408,7 +369,7 @@ The hardware is constantly being developed.
 %  \end{center}
 % \end{frame}
 
-\begin{frame}{Fast Unknown Compact Radio Sources}
+\begin{frame}{Satellite Tracking}
 \begin{center}
 \includegraphics[width=0.8\linewidth]{fig/elaz.jpg}\\
  Consistent with something in low-earth orbit.
@@ -474,7 +435,7 @@ The hardware is constantly being developed.
 
 \section{TART Workshops}
 
-\frame{\tableofcontents[currentsection]}
+% \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Workshops: Building the TART Community}
  \begin{columns}
@@ -486,38 +447,13 @@ The hardware is constantly being developed.
    \item Week-long workshop
    \item Mornings: Lectures on radio astronomy
    \item Afternoons: Building a TART
-   \item Seed Collaborations
+   \item Collaborations
    \item Work with TART data
   \end{itemize}
 \end{column}
  \end{columns} 
  \centering
    \includegraphics[width=0.71\linewidth]{fig/workshop-partners.png}
-\end{frame}
-
-
-
-\begin{frame}{What the future holds}
- \begin{columns}
-  \begin{column}{0.6\linewidth}
-    \begin{itemize}
-    \item TART 4.0?
-    \item Transient event detection. Lightning, cosmic rays.
-    \item More workshops! Bangaladesh, Morrocco, Malta, Oxford, Cambridge, Berkeley, Burkina Faso, Malawi, Rarotonga.
-    \item Automatic tracking of near earth objects
-    \item New Array Designs
-    \item New imaging algorithms (Gridless, Direct from Data)
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.4\linewidth}
-    \includegraphics[width=\linewidth]{fig/tart3.jpg}
-  \end{column}
-\end{columns}
-    \pause
-    \begin{block}{}
-     \begin{center} Thank You! \end{center}
-    \end{block}
-
 \end{frame}
 
 
