@@ -217,6 +217,35 @@ Well its geometry. A bit of diagram drawing gives.
   \includegraphics[width=\linewidth]{images/all_fringes.png}
 \end{frame}
 
+
+\begin{frame}{Multiplying Fringes}
+ If a fringe is multiplied by a complex number $r e^{i \psi}$, then the phase component of the fringe $F(\theta, \phi)$ is shifted.
+\begin{columns}
+ \begin{column}{0.5\linewidth}
+    \begin{minipage}{\linewidth}
+    $e^{i 0.00}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_0.png}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+      $e^{i 1.05}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_1.0471975511965976.png}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+      $e^{i 2.09}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_2.0943951023931953.png}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+      $e^{i 3.14}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_3.141592653589793.png}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+      $e^{i 4.18}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_4.1887902047863905.png}}
+    \end{minipage}
+    \begin{minipage}{\linewidth}
+      $e^{i 5.23}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_5.235987755982988.png}}
+    \end{minipage}
+ \end{column}
+\begin{column}{0.5\linewidth} $e^{2 \pi}$ = \raisebox{-0.4\height}{ \includegraphics[height=4cm]{images/harmonics-phase/fringe_0_6.283185307179586.png}}
+\end{column}
+\end{columns}
+\end{frame}
+
 \section{Imaging is now easy}
 
 \frame{\tableofcontents[currentsection]}
@@ -227,6 +256,7 @@ Well its geometry. A bit of diagram drawing gives.
   The sky is the sum of the fringes multiplied by their visibility.
  \end{block}
 \end{frame}
+
 
 \begin{frame}{Adding fringes}
 \begin{minipage}{\linewidth}
@@ -287,6 +317,46 @@ Well its geometry. A bit of diagram drawing gives.
 \includegraphics[width=\linewidth]{images/demo-time.jpg}
 \end{frame}
 
+\begin{frame}{Stimela}
+ Modern framework for automating radio astronomy imaging. Describes each steps required to process the data.
+ \begin{block}{Docs}
+\url{https://stimela.readthedocs.io/en/latest/}
+\end{block}
+ \begin{block}{tart-cargo}
+\url{https://github.com/tart-telescope/tart-cargo}
+\end{block}
+ \begin{block}{cult-cargo}
+\url{https://github.com/caracal-pipeline/cult-cargo}
+\end{block}
+\end{frame}
+
+\begin{frame}[fragile]{Stimela: Hello World}
+
+\begin{lstlisting}[style=yaml]
+_include:
+    - (tartcargo):
+        - tart-download-data.yml
+
+tart-image:
+    inputs:
+        tart:
+            dtype: str
+            required: true
+            info: "TART name (e.g. mu-udm)"
+
+    assign:
+        api: 'https://api.elec.ac.nz/tart/{recipe.tart}'
+
+    steps:
+        download-hdf:
+            cab: tart-download-data
+            params:
+                api: =recipe.api
+                vis: true
+                file: "{recipe.tart}.hdf"
+
+\end{lstlisting}
+\end{frame}
 
 % \begin{frame}{Calibration}
 %  This is dark magic. Ben and Oleg are the experts. This is where all the work goes in on real telescopes.
@@ -312,18 +382,15 @@ Well its geometry. A bit of diagram drawing gives.
 \section{Stimela pipeline for TART}
 
 
-\begin{frame}{Stimela}
- Modern framework for automating radio astronomy imaging. Describes each steps required to process the data. In our case these are:
+\begin{frame}{A very simple TART pipeline}
+Four basic steps:
  \begin{enumerate}
   \item Download data from a TART (mu-udm)
-  \item Create a measurement set
-  \item Image the measurement set
-  \item Write the image to a 2D image format
+  \item Create a \href{https://casa.nrao.edu/Memos/229.html}{measurement set}.
+  \item \href{https://github.com/tmolteno/disko}{DiSkO Image} the measurement set
+  \item Write the image to a 2D image format (SVG)
  \end{enumerate}
-We describe this using a stimela recipe. Just a text file.
-\begin{block}{Docs}
-\url{https://stimela.readthedocs.io/en/latest/}
-\end{block}
+We specify these steps using a stimela recipe...
 \end{frame}
 
 
@@ -476,10 +543,10 @@ TART data and control are done throught a web-based API.
   \begin{column}{0.6\linewidth}
     \begin{itemize}
     \item Imaging isn't too hard.
-    \item Projects ideas: Trying different TART imaging ideas
+    \item Project idea: Trying different TART imaging ideas
     \item Project idea: Use Machine learning!
     \item More projects: Tools for calibration of arrays.
-    \item More projects: Bigger, more directional antennas.
+    \item More projects: Bigger, more directional antennas. More gain, less field of view.
     \end{itemize}
   \end{column}
   \begin{column}{0.4\linewidth}
