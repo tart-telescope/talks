@@ -22,7 +22,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
-\title[TART]{The Transient Array Radio Telescope}
+\title[TART]{An Overview of the\\Transient Array Radio Telescope}
 \author[Molteno]{Tim Molteno}
 
 \institute[Otago]
@@ -34,13 +34,13 @@
   \& \\
   Department of Physics \& Electronics,
   Rhodes University (South Africa) \\
-  \vspace{3cm}
+  \vspace{2cm}
   \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
 }
 
 \logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}}
 
-\date[DARA Nov 2025] % (optional, should be abbreviation of conference name)
+\date[IUB Nov 2025] % (optional, should be abbreviation of conference name)
 {}
 
 \begin{document}
@@ -91,40 +91,51 @@
 %  I will introduce the Transient Array Radio Telescope. Developed here in the Department of Physics at Otago University, this is the worlds smallest (and cheapest) aperture synthesis radio telescope -- that is a telescope that creates images of the radio sky. It is now being used by astronomers working on the Square Kilometer Array, the worlds largest radio telescope -- as an instrument that can be used to both develop new algorithms for radio astronomy and also to teach students about how radio telescopes work. I will describe the instrument and how it works, as well as giving an overview of the upcoming projects involving this telescope in Africa.
 % \end{frame}
 
-\begin{frame}
-  \tableofcontents
-  % You might wish to add the option [pausesections]
-\end{frame}
+% \begin{frame}
+%   \tableofcontents
+%   % You might wish to add the option [pausesections]
+% \end{frame}
 
 \section{Origins}
 
 \begin{frame}
-\includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
-\begin{block}{SKA, MeerKAT, ASKAP, VLA \& GMRT}
+\begin{columns}[T]
+ \begin{column}{0.48\linewidth}
+  \includegraphics[width=\linewidth]{fig/meerkat_ground_view.jpg}
+\begin{block}{SKA, MeerKAT, VLA \ldots}
 \begin{itemize}
-\item Incredibly sensitive, narrow field of view
-\item Total cost: billions
-\item Running cost: millions
-\item A long queue of eager astronomers...
+\item Incredibly sensitive
+\item Narrow field of view
+\item Total cost: huge
+\item Distant Universe
 \end{itemize}\end{block}
+ \end{column}
+% % Column 2 (vertical line)
+%     \begin{column}{.02\textwidth}
+%         \rule{.1mm}{0.7\textheight}
+%     \end{column}
+
+\begin{column}{0.48\linewidth}
+  \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
 \begin{block}{TART}
- Massive field of view. Look everywhere at once. Transients.
+\begin{itemize}
+ \item Lower sensitivity
+ \item Massive field of view.
+ \item Nearby Universe
+ \item Cosmic Rays, Transients.
+\end{itemize}
+
 \end{block}
+\end{column}
+\end{columns}
 \end{frame}%
 
-\mode<all>
-{
-\usebackgroundtemplate{\includegraphics[height=\paperheight]{TART_map_bd.png}}
-\begin{frame}[plain]
-\end{frame}
-}
-\mode<all>{\usebackgroundtemplate{}}
 
 
-
-\begin{frame}
-   \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
-\end{frame}
+%
+% \begin{frame}
+%    \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
+% \end{frame}
 % \begin{frame}{Goals of the workshop}
 % \begin{}
 %
@@ -203,25 +214,31 @@
 
 
 
-\begin{frame}{TART: Overview}
-   \includegraphics[width=\textwidth]{fig/drone_view_rhodes.jpg}
-   \centering{all-sky  $\cdot$ 24 antennas $\cdot$ real-time $\cdot$ open-source $\cdot$ imaging interferometer } 
-\end{frame}
+% \begin{frame}{TART: Overview}
+%    \includegraphics[width=\textwidth]{fig/drone_view_rhodes.jpg}
+%    \centering{all-sky  $\cdot$ 24 antennas $\cdot$ real-time $\cdot$ open-source $\cdot$ imaging interferometer }
+% \end{frame}
 
 
 
 
-\mode<all>
-{
-\usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart_udm_array.jpg}}
-\begin{frame}[plain]
-\end{frame}
-}
-\mode<all>{\usebackgroundtemplate{}}
+% \mode<all>
+% {
+% \usebackgroundtemplate{\includegraphics[height=\paperheight]{fig/tart_udm_array.jpg}}
+% \begin{frame}[plain]
+% \end{frame}
+% }
+% \mode<all>{\usebackgroundtemplate{}}
 
 
 \begin{frame}{Real-time, all-sky radio telescope}
  \includegraphics[width=\textwidth]{fig/browser_view.png}
+\end{frame}
+
+\begin{frame}
+\begin{center}
+\includegraphics[width=0.8\linewidth]{fig/spotless-mu-udm.png}
+ \end{center}
 \end{frame}
 
 \subsection*{Open Source}
@@ -281,33 +298,33 @@
 \mode<all>{\usebackgroundtemplate{}}
 
 
-\begin{frame}{TART Electronics}
- \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
-\end{frame}
-
-\begin{frame}{TART Features}
- \begin{columns}
-  \begin{column}{0.4\linewidth}
-    \begin{itemize}
-    \item 24-Radio Receivers
-    \item Correlator works in real time!
-    \item Each radio: 2.5 MHz bandwidth
-    \item Real-time visibilities
-    \item Stored in the cloud
-    \end{itemize}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-    \includegraphics[width=\linewidth]{fig/tart3.jpg}
-  \end{column}
-\end{columns}
-\pause
-    \begin{block}{Field of View}
-20 thousand square degrees.
-    \end{block}
-    \begin{block}{New Developments}
-The hardware is constantly being developed.
-    \end{block}
-\end{frame}
+% \begin{frame}{TART Electronics}
+%  \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
+% \end{frame}
+%
+% \begin{frame}{TART Features}
+%  \begin{columns}
+%   \begin{column}{0.4\linewidth}
+%     \begin{itemize}
+%     \item 24-Radio Receivers
+%     \item Correlator works in real time!
+%     \item Each radio: 2.5 MHz bandwidth
+%     \item Real-time visibilities
+%     \item Stored in the cloud
+%     \end{itemize}
+%   \end{column}
+%   \begin{column}{0.6\linewidth}
+%     \includegraphics[width=\linewidth]{fig/tart3.jpg}
+%   \end{column}
+% \end{columns}
+% \pause
+%     \begin{block}{Field of View}
+% 20 thousand square degrees.
+%     \end{block}
+%     \begin{block}{New Developments}
+% The hardware is constantly being developed.
+%     \end{block}
+% \end{frame}
 
 
 % \begin{frame}[containsverbatim]
@@ -369,12 +386,6 @@ The hardware is constantly being developed.
 %  \end{center}
 % \end{frame}
 
-\begin{frame}{Satellite Tracking}
-\begin{center}
-\includegraphics[width=0.8\linewidth]{fig/elaz.jpg}\\
- Consistent with something in low-earth orbit.
- \end{center}
-\end{frame}
 
 % 
 % 
@@ -435,27 +446,35 @@ The hardware is constantly being developed.
 
 \section{TART Workshops}
 
+\mode<all>
+{
+\usebackgroundtemplate{\includegraphics[height=\paperheight]{TART_map_bd.png}}
+\begin{frame}[plain]
+\end{frame}
+}
+\mode<all>{\usebackgroundtemplate{}}
+
 % \frame{\tableofcontents[currentsection]}
 
-\begin{frame}{Workshops: Building the TART Community}
- \begin{columns}
-  \begin{column}{0.4\linewidth}
-\includegraphics[width=\linewidth]{fig/Africa.pdf}
-  \end{column}
-  \begin{column}{0.6\linewidth}
-  \begin{itemize}
-   \item Week-long workshop
-   \item Mornings: Lectures on radio astronomy
-   \item Afternoons: Building a TART
-   \item Collaborations
-   \item Work with TART data
-  \end{itemize}
-\end{column}
- \end{columns} 
- \centering
-   \includegraphics[width=0.71\linewidth]{fig/workshop-partners.png}
-\end{frame}
-
+% \begin{frame}{Workshops: Building the TART Community}
+%  \begin{columns}
+%   \begin{column}{0.4\linewidth}
+% \includegraphics[width=\linewidth]{fig/Africa.pdf}
+%   \end{column}
+%   \begin{column}{0.6\linewidth}
+%   \begin{itemize}
+%    \item Week-long workshop
+%    \item Mornings: Lectures on radio astronomy
+%    \item Afternoons: Building a TART
+%    \item Collaborations
+%    \item Work with TART data
+%   \end{itemize}
+% \end{column}
+%  \end{columns}
+%  \centering
+%    \includegraphics[width=0.71\linewidth]{fig/workshop-partners.png}
+% \end{frame}
+%
 
 
 \end{document}
