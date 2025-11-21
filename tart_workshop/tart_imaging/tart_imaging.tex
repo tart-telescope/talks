@@ -250,6 +250,21 @@ Well its geometry. A bit of diagram drawing gives.
 
 \frame{\tableofcontents[currentsection]}
 
+\begin{frame}{The probability of the sky}
+ If we measure a visibility $V_{ij} = r e^{i \psi}$, with uncertainty $\sigma_\psi$. Assuming that the sky is a single point source, then what does this tell us about the sky?
+
+ \begin{itemize}
+  \item  The source must be {\em close} to the locations in the sky where the fringe phase is $\psi$.
+  \item How close depends on the noise. Define a likelihood: \[ P(\theta, \phi) = e^{-\left(\frac{F_{ij(\theta, \phi)} - \psi}{\sigma_\psi}\right)^2}  \]
+ \end{itemize}
+
+     \begin{minipage}{\linewidth}
+    $F(\theta, \phi)$ = \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics-phase/fringe_0_0.png}}
+    $V_{ij} = 1e^{i 0}$ \hspace{1cm} $P(\theta, \phi)$ = \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_0.png}}
+    \end{minipage}
+
+\end{frame}
+
 \begin{frame}{Ridiculously Simple}
  \[ S(\theta, \phi) = \sum_{i,j} V_{ij} F_{ij}(\theta, \phi)\]
  \begin{block}{Just add them up}
@@ -312,6 +327,32 @@ Well its geometry. A bit of diagram drawing gives.
  We could pretend that there are millions of unmeasured visibilities. And that these are all zero.
 \end{block}
 \end{frame}
+
+
+\begin{frame}{Calibration: Gains and Phases}
+ Cable length differences introduce {\em phase changes}, $\theta_i$, and antenna gain and cable loss introduces {\em gain} differences, $r_i$, per antenna. The measured signal becomes:
+ \[ E^m_j(t) = r_j e^{i \theta_j} E_j(t) \]
+ where $E_j$ is the actual signal at antenna $j$.
+
+ \begin{block}{Problem}
+  The radio is measuring the wrong signal. If we use $E^m_j(t)$ we will get the wrong visibility.
+ \end{block}
+\end{frame}
+
+
+\begin{frame}{Calibration: Gains and Phases}
+Then the measured visibility, $V^m$ is given by
+\begin{eqnarray*}
+V^m_{ij} & = & \frac{1}{T} \int_0^T E^m_i(t) (E^m_j)^{\star}(t) = \frac{1}{T} \int_0^T r_i e^{i \theta_i} E_i(t) r_j e^{-i \theta_j} E_j^\star(t) \\
+ & = & r_i r_j e^{i(\theta_i - \theta_j)} V_{ij}
+\end{eqnarray*}
+
+\begin{block}{The right visibility}
+ \[ V_{ij} =  \frac{1}{r_i r_j} e^{-i(\theta_i - \theta_j)} V^m_{ij} \]
+\end{block}
+These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This process is called {\em calibration}.
+\end{frame}
+
 
 \begin{frame}{Lets try it}
 \includegraphics[width=\linewidth]{images/demo-time.jpg}
