@@ -337,6 +337,10 @@ Well its geometry. A bit of diagram drawing gives.
  \begin{block}{Problem}
   The radio is measuring the wrong signal. If we use $E^m_j(t)$ we will get the wrong visibility.
  \end{block}
+ \pause
+ \begin{block}{Solution}
+  Recover the desired signal: $E_j(t) = r^{-1} e^{-i \theta_j} E^m_j(t)$.
+ \end{block}
 \end{frame}
 
 
@@ -350,7 +354,7 @@ V^m_{ij} & = & \frac{1}{T} \int_0^T E^m_i(t) (E^m_j)^{\star}(t) = \frac{1}{T} \i
 \begin{block}{The right visibility}
  \[ V_{ij} =  \frac{1}{r_i r_j} e^{-i(\theta_i - \theta_j)} V^m_{ij} \]
 \end{block}
-These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This process is called {\em calibration}.
+These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This is {\em calibration}.
 \end{frame}
 
 
