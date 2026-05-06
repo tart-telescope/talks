@@ -63,7 +63,7 @@
 \begin{frame}
   \titlepage
 \end{frame}
- 
+
 % \begin{frame}
 % \vspace{1cm}
 %   \includegraphics[width=\linewidth]{../tart_overview/fig/spiral.jpeg}\\
@@ -107,14 +107,15 @@ The process of building images of the radio sky from many separate radio receive
 \end{columns}
 \end{frame}
 
+
 \section{Visibilities: What are they}
 
 \frame{\tableofcontents[currentsection]}
 
 \begin{frame}{Synthesis Imaging}
 
-\begin{block}{What are visibilities?}
- Just the averages of the product of pairs of signals $E_i(t) \times E_j^{\star}(t)$.
+\begin{block}{Visibilities: What we measure}
+Average product of pairs of signals $E_i(t) \times E_j^{\star}(t)$.
 \end{block}
 \pause
 \begin{columns}
@@ -126,7 +127,7 @@ The process of building images of the radio sky from many separate radio receive
 \begin{enumerate}
  \item 276 Pairs of antennas
  \item T $\sim$ 1 second
- \item Real-time correlation in FPGA
+ \item Done by the Correlator
  \item 4.5 Giga MAC per second
 \end{enumerate}
  \end{column}
@@ -159,7 +160,7 @@ E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
 \begin{frame}
 \begin{columns}
  \begin{column}{0.3\linewidth}
-  Move a source around: plot the visibility.
+  For each baseline, move a source around the sky: plot the visibility. Get a complex function whose phase changes with position.
   \begin{block}{Quiz}
    Where are the baselines?
   \end{block}
@@ -186,7 +187,7 @@ Well its geometry. A bit of diagram drawing gives.
   \item $\Delta x_{ij}$ is the distance between antenna in $x$
   \item $\Delta y_{ij}$ is the distance between antennas in $y$
   \item $\Delta z_{ij}$ is the distance between antennas in $z$ (usually zero)
-  \item We know these and they don't change
+  \item We know these and they don't change. Depend on antenna layout.
  \end{itemize}
  \begin{block}{Astronomers}
   We don't like $\Delta x$,$\Delta y$ so call them $u, v$.
@@ -201,6 +202,7 @@ Well its geometry. A bit of diagram drawing gives.
    One for each baseline?
   \end{block}
   \[ F_{ij}(\theta, \phi) \]
+  Remember fringes are complex.
 \end{column}
  \begin{column}{0.7\linewidth}
   \begin{center}
@@ -329,33 +331,38 @@ Well its geometry. A bit of diagram drawing gives.
 \end{frame}
 
 
-\begin{frame}{Calibration: Gains and Phases}
- Cable length differences introduce {\em phase changes}, $\theta_i$, and antenna gain and cable loss introduces {\em gain} differences, $r_i$, per antenna. The measured signal becomes:
- \[ E^m_j(t) = r_j e^{i \theta_j} E_j(t) \]
- where $E_j$ is the actual signal at antenna $j$.
-
- \begin{block}{Problem}
-  The radio is measuring the wrong signal. If we use $E^m_j(t)$ we will get the wrong visibility.
- \end{block}
- \pause
- \begin{block}{Solution}
-  Recover the desired signal: $E_j(t) = r^{-1} e^{-i \theta_j} E^m_j(t)$.
- \end{block}
-\end{frame}
-
-
-\begin{frame}{Calibration: Gains and Phases}
-Then the measured visibility, $V^m$ is given by
-\begin{eqnarray*}
-V^m_{ij} & = & \frac{1}{T} \int_0^T E^m_i(t) (E^m_j)^{\star}(t) = \frac{1}{T} \int_0^T r_i e^{i \theta_i} E_i(t) r_j e^{-i \theta_j} E_j^\star(t) \\
- & = & r_i r_j e^{i(\theta_i - \theta_j)} V_{ij}
-\end{eqnarray*}
-
-\begin{block}{The right visibility}
- \[ V_{ij} =  \frac{1}{r_i r_j} e^{-i(\theta_i - \theta_j)} V^m_{ij} \]
-\end{block}
-These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This is {\em calibration}.
-\end{frame}
+% \section{Calibration}
+%
+% \frame{\tableofcontents[currentsection]}
+%
+%
+% \begin{frame}{Calibration: Gains and Phases}
+%  Cable length differences introduce {\em phase changes}, $\theta_i$, and antenna gain and cable loss introduces {\em gain} differences, $r_i$, per antenna. The measured signal becomes:
+%  \[ E^m_j(t) = r_j e^{i \theta_j} E_j(t) \]
+%  where $E_j$ is the actual signal at antenna $j$.
+%
+%  \begin{block}{Problem}
+%   The radio is measuring the wrong signal. If we use $E^m_j(t)$ we will get the wrong visibility.
+%  \end{block}
+%  \pause
+%  \begin{block}{Solution}
+%   Recover the desired signal: $E_j(t) = r^{-1} e^{-i \theta_j} E^m_j(t)$.
+%  \end{block}
+% \end{frame}
+%
+%
+% \begin{frame}{Calibration: Gains and Phases}
+% Then the measured visibility, $V^m$ is given by
+% \begin{eqnarray*}
+% V^m_{ij} & = & \frac{1}{T} \int_0^T E^m_i(t) (E^m_j)^{\star}(t) = \frac{1}{T} \int_0^T r_i e^{i \theta_i} E_i(t) r_j e^{-i \theta_j} E_j^\star(t) \\
+%  & = & r_i r_j e^{i(\theta_i - \theta_j)} V_{ij}
+% \end{eqnarray*}
+%
+% \begin{block}{The right visibility}
+%  \[ V_{ij} =  \frac{1}{r_i r_j} e^{-i(\theta_i - \theta_j)} V^m_{ij} \]
+% \end{block}
+% These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This is {\em calibration}.
+% \end{frame}
 
 
 \begin{frame}{Lets try it}
@@ -369,6 +376,9 @@ These $g_i = r e^{i \theta_i}$ must be found before imaging will work. This is {
 \end{block}
  \begin{block}{tart-cargo}
 \url{https://github.com/tart-telescope/tart-cargo}
+\end{block}
+ \begin{block}{Sample recipes}
+\url{https://github.com/tart-telescope/radio-imaging}
 \end{block}
  \begin{block}{cult-cargo}
 \url{https://github.com/caracal-pipeline/cult-cargo}
@@ -406,20 +416,20 @@ tart-image:
 % \begin{frame}{Calibration}
 %  This is dark magic. Ben and Oleg are the experts. This is where all the work goes in on real telescopes.
 % \end{frame}
-% 
+%
 % \begin{frame}{Synthesis Continued...}
 % Fourier transform relationship between radio sky brightness $I(l,m)$ and
 % visibility $V(u,v)$,
 % \[
 %   V(u,v) = \int I(l,m) e^{2\pi j(lu  + mv)} dl dm
 % \]
-% Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$, 
+% Obtain $I(l,m)$ through inverse Fourier transform of $V(u,v)$,
 % \[
 %  I(l,m) = \mathscr{F}^{-1}\{V(u,v)\}
 % \]
-% where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair. 
+% where $V(u,v)$ is the visibility function sampled in the $uv$-plane at the locations of each antenna $(u_{ij},v_{ij})$ pair.
 % \end{frame}
-% 
+%
 
 % \section{Expected \& Unexpected Results}
 

@@ -1,0 +1,83 @@
+%\documentclass[handout]{beamer}
+\documentclass[ignorenonframetext]{beamer}
+\usepackage{textpos}
+\usepackage{graphicx}
+\usepackage{pgf}
+\usepackage{caption}
+\usepackage{listings}
+\usepackage{multimedia}
+\usepackage{gensymb}
+\usepackage{amsmath, mathrsfs}
+
+% \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
+
+\lstdefinestyle{yaml}{
+     basicstyle=\ttfamily\color{blue}\tiny,
+     rulecolor=\color{black},
+     string=[s]{'}{'},
+     stringstyle=\color{blue},
+     comment=[l]{:},
+     commentstyle=\color{black},
+     morecomment=[l]{-}
+ }
+
+\usetheme{Boadilla}
+\usefonttheme{serif}
+% \mode<presentation>
+% {
+%  \usefonttheme{serif}
+% % \useoutertheme{sidebar}
+% %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
+% }
+
+\title[TART API]{The TART API}
+
+\author[Scheel]{Max Scheel}
+
+\institute[Elec Research]
+{
+  Electronics Research Foundation \\
+  New Zealand \\
+  \vspace{2cm}
+  \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
+}
+
+\logo{\pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}}
+
+\date[TART Madagascar 2026] % (optional, should be abbreviation of conference name)
+{}
+
+% \addtobeamertemplate{headline}{}{%
+% \begin{textblock*}{100mm}(0.87\textwidth,2mm)
+% \includegraphics[height=1.5cm]{elec_logo.pdf}
+% \end{textblock*}}
+
+\begin{document}
+
+% Abstract: In this talk I'll give an overview of Africa's newest radio telescope, the TART, recently installed in Mauritius in a joint effort between SARAO, the University of Otago (NZ). I'll talk about TARTs origins, it's design and open-source philosophy as well as the upcoming project to install TART telescopes in the SKA African partner nations. I'll also include some details about improvements that will appear in TART-3, the next version of TART!
+
+\begin{frame}
+  \titlepage
+\end{frame}
+
+% \begin{frame}
+% \vspace{1cm}
+%   \includegraphics[width=\linewidth]{../tart_overview/fig/spiral.jpeg}\\
+%   \centering{A TART radio telescope under construction in Mauritius}
+% \end{frame}
+%
+
+\begin{frame}
+  \tableofcontents
+  % You might wish to add the option [pausesections]
+\end{frame}
+
+\section{Restful API}
+
+\begin{frame}{Reference URL}
+ \url{https://tart.elec.ac.nz/docs/basics/tart-api/}
+\end{frame}
+
+
+
+\end{document}
