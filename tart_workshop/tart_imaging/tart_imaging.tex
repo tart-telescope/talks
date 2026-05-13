@@ -110,7 +110,7 @@
     \foreach \armAngle in {0, 72, 144, 216, 288} {
 
         % Draw the spiral arm curve: r = 0.5 * theta
-        \draw[thick, black!80, samples=60, domain=0:pi]
+        \draw[thin, black!80, samples=60, domain=0:pi]
             plot ({0.5*\x*cos(deg(\x) + \armAngle)}, {0.5*\x*sin(deg(\x) + \armAngle)}, 0);
 
         % 4. Place 5 Antennas per arm
