@@ -8,6 +8,11 @@
 \usepackage{multimedia}
 \usepackage{gensymb}
 \usepackage{amsmath, mathrsfs}
+\usepackage{adjustbox}
+\usepackage{tikz}
+\usepackage{tikz-3dplot}
+
+\usetikzlibrary{shapes.geometric, arrows.meta, calc}
 
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
@@ -78,33 +83,111 @@
 
 \section{Synthesis Imaging}
 
+
 \begin{frame}{Synthesis Imaging}
 \begin{columns}
  \begin{column}{0.5\linewidth}
-  \includegraphics[width=\linewidth]{images/telescope_array.jpg}
+
+\begin{adjustbox}{width=\linewidth}
+ \centering
+% Set the viewing angle (Elevation, Azimuth)
+\tdplotsetmaincoords{55}{115}
+
+\begin{tikzpicture}[tdplot_main_coords, scale=1.0]
+
+    % 1. Draw the Square Plane Grid
+   % \draw[thin, gray!30] (-4,-4,0) grid (4,4,0);
+
+    % 2. Draw Coordinate Axes for orientation
+    \draw[-Stealth, gray] (0,0,0) -- (3,0,0) node[anchor=north east] {$x$};
+    \draw[-Stealth, gray] (0,0,0) -- (0,3,0) node[anchor=north west] {$y$};
+    \draw[-Stealth, gray] (0,0,0) -- (0,0,3.5) node[anchor=south] {$z$};
+
+    % 3. Create the 5 Spiral Arms
+    % We loop through 360 degrees in increments of 72 (360/5)
+    \foreach \armAngle in {0, 72, 144, 216, 288} {
+
+        % Draw the spiral arm curve: r = 0.5 * theta
+        \draw[thick, black!80, samples=60, domain=0:pi]
+            plot ({0.5*\x*cos(deg(\x) + \armAngle)}, {0.5*\x*sin(deg(\x) + \armAngle)}, 0);
+
+        % 4. Place 5 Antennas per arm
+        \foreach \i in {1, 2, 3, 4, 5} {
+            % Calculate position along the parameter 't'
+            \pgfmathsetmacro{\t}{\i * 0.6}
+            \pgfmathsetmacro{\px}{0.5*\t*cos(deg(\t) + \armAngle)}
+            \pgfmathsetmacro{\py}{0.5*\t*sin(deg(\t) + \armAngle)}
+
+            % Draw antenna pole and the tip (a small dot)
+            \draw[blue!70!black, thick] (\px, \py, 0) -- (\px, \py, 0.2);
+            \fill[black] (\px, \py, 0.2) circle (1.5pt);
+        }
+    }
+
+    % 5. The Star S (Positioned high at z=9)
+    % Dotted line to show vertical alignment
+    % \draw[dotted, gray] (0,0,0) -- (0,0,4);
+
+    % The Yellow Star
+    \node[star, star points=5, star point ratio=2.25, minimum size=0.2cm,
+          fill=yellow,] (starNode) at (0,2,4.2) {};
+
+    % Label the Star
+    \node[anchor=west, xshift=12pt] at (starNode) {S};
+
+\end{tikzpicture}
+\end{adjustbox}
  \end{column}
  \begin{column}{0.5\linewidth}
   \includegraphics[width=\linewidth]{images/radio_image.jpg}
  \end{column}
 \end{columns}
-The process of building images of the radio sky from many separate radio receivers.
+Building images of the radio sky from many separate radio receivers.
 \end{frame}
 
-\begin{frame}{Synthesis Imaging}
-\begin{columns}
- \begin{column}{0.5\linewidth}
-  \includegraphics[width=\linewidth]{images/point_source.jpg}
- \end{column}
- \begin{column}{0.5\linewidth}
-  \begin{enumerate}
-   \item The signal from a source arrives at one antenna before it arrives at others.
-   \item The visibilty measures the arrival time difference
-   \item As a phase (1 wavelength $\equiv 2 \pi$ phase)
-   \item Each pair of antennas makes 1 measurement
-   \item $N$ antennas $\rightarrow N(N-1)$ pairs.
-  \end{enumerate}
- \end{column}
-\end{columns}
+\begin{frame}
+\begin{center}
+\begin{tikzpicture}[>=Stealth]
+
+    % --- Coordinates ---
+    \coordinate (Star) at (-4, 6);
+    \coordinate (AntI) at (0, 0);
+    \coordinate (AntJ) at (4, 0);
+
+    % --- Draw Antennas ---
+    % Antenna i
+    \draw[thick] (AntI) -- ++(0,-0.5); % Stand
+    \draw[thick, fill=gray!20] (AntI) ++(-0.4,0) arc (240:360:0.46); % Dish
+    \node[below=12pt] at (AntI) {$A_i$};
+
+    % Antenna j
+    \draw[thick] (AntJ) -- ++(0,-0.5); % Stand
+    \draw[thick, fill=gray!20] (AntJ) ++(-0.4,-0.15) arc (260:380:0.46); % Dish
+    \node[below=12pt] at (AntJ) {$A_j$};
+
+    % --- Baseline b ---
+    \draw[<->, thick] ($(AntI)-(0,1)$) -- ($(AntJ)-(0,1)$) node[midway, fill=white] {$b_{i,j}$};
+
+    % --- Distant Star ---
+    \node[star, star points=5, star point ratio=2.25, fill=yellow, minimum size=0.5cm] at (Star) {};
+    \node[left] at (Star) {S};
+
+    % --- Paths to Star ---
+    % Path to Ant i
+    \draw[dashed, blue!70!black] (Star) -- (AntI)
+        node[midway, left, xshift=-2pt] {$r$};
+
+    % Path to Ant j
+    \draw[dashed, red!70!black] (Star) -- (AntJ)
+        node[midway, right, xshift=5pt, yshift=5pt] {$r + dr$};
+
+    % --- Pointing Direction ---
+    % Arrows showing antennas are pointing at the star
+    \draw[->, thick, gray] (AntI) -- ($(AntI)!1.5cm!(Star)$);
+    \draw[->, thick, gray] (AntJ) -- ($(AntJ)!1.5cm!(Star)$);
+
+\end{tikzpicture}
+\end{center}
 \end{frame}
 
 
@@ -112,7 +195,7 @@ The process of building images of the radio sky from many separate radio receive
 
 \frame{\tableofcontents[currentsection]}
 
-\begin{frame}{Synthesis Imaging}
+\begin{frame}{Visibilities}
 
 \begin{block}{Visibilities: What we measure}
 Average product of pairs of signals $E_i(t) \times E_j^{\star}(t)$.
