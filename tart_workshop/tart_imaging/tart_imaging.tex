@@ -167,10 +167,10 @@ E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
 \end{column}
  \begin{column}{0.7\linewidth}
   \begin{center}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_0.png}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_1.png}\\
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_2.png}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_3.png}
   \end{center}
  \end{column}
 \end{columns}
@@ -206,10 +206,10 @@ Well its geometry. A bit of diagram drawing gives.
 \end{column}
  \begin{column}{0.7\linewidth}
   \begin{center}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_0.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_1.pdf}\\
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_2.pdf}
-  \includegraphics[width=0.45\linewidth]{images/harmonic_uvw_3.pdf}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_0.png}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_1.png}\\
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_2.png}
+  \includegraphics[width=0.45\linewidth]{images/harmonics/fringe_3.png}
   \end{center}
  \end{column}
 \end{columns}
@@ -220,7 +220,8 @@ Well its geometry. A bit of diagram drawing gives.
 \end{frame}
 
 
-\begin{frame}{Multiplying Fringes}
+
+\begin{frame}{Multiplying Fringes shifts phase}
  If a fringe is multiplied by a complex number $r e^{i \psi}$, then the phase component of the fringe $F(\theta, \phi)$ is shifted.
 \begin{columns}
  \begin{column}{0.5\linewidth}
@@ -243,7 +244,7 @@ Well its geometry. A bit of diagram drawing gives.
       $e^{i 5.23}$ = \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics-phase/fringe_0_5.235987755982988.png}}
     \end{minipage}
  \end{column}
-\begin{column}{0.5\linewidth} $e^{2 \pi}$ = \raisebox{-0.4\height}{ \includegraphics[height=4cm]{images/harmonics-phase/fringe_0_6.283185307179586.png}}
+\begin{column}{0.5\linewidth} $e^{i 2 \pi}$ = \raisebox{-0.4\height}{ \includegraphics[height=4cm]{images/harmonics-phase/fringe_0_6.283185307179586.png}}
 \end{column}
 \end{columns}
 \end{frame}
@@ -257,7 +258,7 @@ Well its geometry. A bit of diagram drawing gives.
 
  \begin{itemize}
   \item  The source must be {\em close} to the locations in the sky where the fringe phase is $\psi$.
-  \item How close depends on the noise. Define a likelihood: \[ P(\theta, \phi) = e^{-\left(\frac{F_{ij(\theta, \phi)} - \psi}{\sigma_\psi}\right)^2}  \]
+  \item How close depends on the noise. Define a Gaussian likelihood: \[ P(\theta, \phi) = e^{-\left(\frac{F_{ij(\theta, \phi)} - \psi}{\sigma_\psi}\right)^2}  \]
  \end{itemize}
 
      \begin{minipage}{\linewidth}
@@ -274,39 +275,38 @@ Well its geometry. A bit of diagram drawing gives.
  \end{block}
 \end{frame}
 
-
-\begin{frame}{Adding fringes}
+\begin{frame}{Adding fringe probabilities}
 \begin{minipage}{\linewidth}
   \centering
-  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_0.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_1.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_1.png}} =
   \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/sum_1.png}}
 \end{minipage}
 \begin{minipage}{\linewidth}
   \centering
-  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_0.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_1.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/fringe_2.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/prob_2.png}} =
   \raisebox{-0.4\height}{\includegraphics[height=2cm]{images/harmonics/sum_2.png}}
 \end{minipage}
 \begin{minipage}{\linewidth}
   \centering
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_0.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_1.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_2.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_3.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_4.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_5.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_2.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_3.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_4.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_5.png}} =
   \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/sum_5.png}}
 \end{minipage}
 \begin{minipage}{\linewidth}
   \centering
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_0.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_1.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_2.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_3.png}} +
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_4.png}} \ldots
-  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/fringe_51.png}} =
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_0.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_1.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_2.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_3.png}} +
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_4.png}} \ldots
+  \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/prob_51.png}} =
   \raisebox{-0.4\height}{\includegraphics[height=1cm]{images/harmonics/sum_51.png}}
 \end{minipage}
 \begin{minipage}{\linewidth}
@@ -315,6 +315,11 @@ Well its geometry. A bit of diagram drawing gives.
 \end{minipage}
 \end{frame}
 
+\begin{frame}{All the fringes: The point spread function}
+\centering{
+ \includegraphics[width=0.7\linewidth]{images/harmonics/sum_275.png}
+ }
+\end{frame}
 \begin{frame}{Imaging}
  Imaging: work out where the sources are from 276 measured visibilities. So solve 276 equations to work out the sky.
  \begin{itemize}
