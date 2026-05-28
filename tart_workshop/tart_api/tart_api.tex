@@ -8,6 +8,11 @@
 \usepackage{multimedia}
 \usepackage{gensymb}
 \usepackage{amsmath, mathrsfs}
+\usepackage[fixed]{fontawesome5}
+\usepackage{tcolorbox}
+\usepackage{tikz}
+\tcbuselibrary{skins,raster}
+\usetikzlibrary{positioning,fit,calc,decorations.pathmorphing,backgrounds}
 
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
@@ -57,7 +62,7 @@
 % Abstract: In this talk I'll give an overview of Africa's newest radio telescope, the TART, recently installed in Mauritius in a joint effort between SARAO, the University of Otago (NZ). I'll talk about TARTs origins, it's design and open-source philosophy as well as the upcoming project to install TART telescopes in the SKA African partner nations. I'll also include some details about improvements that will appear in TART-3, the next version of TART!
 
 \begin{frame}
-  \titlepage
+	\titlepage
 \end{frame}
 
 % \begin{frame}
@@ -68,14 +73,192 @@
 %
 
 \begin{frame}
-  \tableofcontents
-  % You might wish to add the option [pausesections]
+	\tableofcontents
+	% You might wish to add the option [pausesections]
 \end{frame}
 
 \section{Restful API}
 
 \begin{frame}{Reference URL}
- \url{https://tart.elec.ac.nz/docs/basics/tart-api/}
+	\url{https://tart.elec.ac.nz/docs/basics/tart-api/}
+\end{frame}
+
+\begin{frame}{TART Network Architecture}
+	\centering
+	\begin{tikzpicture}[
+			node distance=0.5cm and 0.8cm,
+			every node/.style={font=\scriptsize},
+			tartbox/.style={draw=orange!70, rounded corners, fill=orange!5,
+					inner sep=0.2em, line width=0.06em, minimum width=1.6cm, align=center, font=\tiny},
+			serverbox/.style={draw=blue!60, rounded corners, fill=blue!5,
+					inner sep=0.3em, line width=0.08em, minimum width=2.2cm, align=center, font=\scriptsize},
+			servicebox/.style={draw=blue!40, rounded corners, fill=white,
+					inner sep=0.2em, line width=0.05em, minimum width=1.8cm, align=center, font=\tiny},
+			clientbox/.style={draw=green!60!black, rounded corners, fill=green!5,
+					inner sep=0.2em, line width=0.06em, minimum width=1.4cm, align=center, font=\tiny},
+			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed,
+					decoration={snake, amplitude=0.3mm, segment length=1.5mm}, decorate},
+			conn/.style={->, >=stealth, line width=0.08em, draw=black!60},
+		]
+
+		% --- Telescopes (left) ---
+		\node[tartbox] (tart1) {\faIcon{broadcast-tower} nz-sig};
+		\node[tartbox, below=0.2cm of tart1] (tart2) {\faIcon{broadcast-tower} za-kat};
+		\node[tartbox, below=0.2cm of tart2] (tart3) {\faIcon{broadcast-tower} mu-udm};
+		\node[below=0.05cm of tart3, font=\scriptsize] (dots) {\vdots};
+		\node[tartbox, below=0.05cm of dots] (tartn) {\faIcon{broadcast-tower} bd-iub};
+		\node[font=\tiny, text=orange!70, above=0.1cm of tart1] {Tailscale clients};
+
+		% --- nginx with two interfaces ---
+		\node[serverbox, right=2.2cm of tart2] (nginx) {
+			\faIcon{server}~\textbf{nginx}\\[-1pt]
+			api.elec.ac.nz
+		};
+		% Two sides of nginx
+		\node[font=\tiny, text=purple!70, left=0.1cm of nginx.west, anchor=east, align=right] (ts-side) {Tailscale\\interface};
+		\node[font=\tiny, text=green!50!black, right=0.1cm of nginx.east, anchor=west, align=left] (pub-side) {Public\\interface};
+
+		% Headscale above
+		\node[servicebox, above=0.6cm of nginx, draw=purple!50, fill=purple!5] (headscale) {
+			\faIcon{network-wired}~\textbf{Headscale}
+		};
+
+		% map below
+		\node[servicebox, below=0.6cm of nginx] (mapui) {
+			\faIcon{map}~\textbf{map.elec.ac.nz}
+		};
+
+		% gRPC map -> headscale
+		\draw[conn, draw=purple!60, dashed] (mapui) -- node[right, font=\tiny, text=purple!60] {gRPC} (headscale);
+
+		% --- Clients (right) ---
+		\node[clientbox, right=2.2cm of nginx, yshift=0.5cm] (browser) {\faIcon{laptop} Browser};
+		\node[clientbox, below=0.2cm of browser] (python) {\faIcon{python} tart\_tools};
+		\node[clientbox, below=0.2cm of python] (cli) {\faIcon{terminal} curl};
+
+		% --- WireGuard connections (Tailscale side) ---
+		\draw[wg] (tart1.east) -- (nginx.west|-tart1.east);
+		\draw[wg] (tart2.east) -- (nginx.west);
+		\draw[wg] (tart3.east) -- (nginx.west|-tart3.east);
+		\draw[wg] (tartn.east) -- (nginx.west|-tartn.east);
+		\node[font=\tiny\bfseries, text=purple!70, above=0.15cm of tart1.north east, anchor=south west] {WireGuard / Tailnet};
+
+		% --- Client connections (Public side) ---
+		\draw[conn] (nginx.east|-browser) -- (browser.west);
+		\draw[conn] (nginx.east|-python) -- (python.west);
+		\draw[conn] (nginx.east|-cli) -- (cli.west);
+		\node[font=\tiny\bfseries, text=green!50!black, above=0.05cm of browser.north west, anchor=south east] {HTTPS};
+
+		% --- Example URL ---
+		\node[below=0.4cm of mapui, font=\tiny, text=black!50] {
+			\texttt{api.elec.ac.nz/tart/mu-udm/api/v1/imaging/vis}
+		};
+
+	\end{tikzpicture}
+\end{frame}
+
+\begin{frame}{Single Telescope Node}
+	\centering
+	\begin{tikzpicture}[
+			node distance=0.4cm and 0.8cm,
+			every node/.style={font=\scriptsize},
+			hwbox/.style={draw=orange!70, rounded corners, fill=orange!5,
+					inner sep=0.2em, line width=0.06em, minimum width=1.4cm, align=center, font=\tiny},
+			container/.style={draw=blue!50, rounded corners, fill=blue!5,
+					inner sep=0.2em, line width=0.06em, minimum width=2.0cm, align=center, font=\tiny},
+			clientbox/.style={draw=green!60!black, rounded corners, fill=green!5,
+					inner sep=0.2em, line width=0.06em, minimum width=1.6cm, align=center, font=\tiny},
+			cloudbox/.style={draw=blue!60, rounded corners, fill=blue!5,
+					inner sep=0.2em, line width=0.06em, minimum width=1.8cm, align=center, font=\tiny},
+			nodebox/.style={draw=black!40, rounded corners=0.3cm, fill=yellow!3,
+					inner sep=0.4em, line width=0.06em},
+			dockerbox/.style={draw=cyan!60, rounded corners=0.2cm, fill=cyan!3,
+					inner sep=0.4em, line width=0.06em},
+			conn/.style={->, >=stealth, line width=0.08em, draw=black!60},
+			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed,
+					decoration={snake, amplitude=0.3mm, segment length=1.5mm}, decorate},
+		]
+
+		% --- Hardware chain (top row, aligned with docker containers below) ---
+		% Place docker containers first to establish positions
+		% --- Docker Compose stack (inside RPi) ---
+		\node[container] (fastapi) {
+			\faIcon{python}~\textbf{FastAPI}\\[-1pt]
+			backend + SPI
+		};
+		\node[container, right=0.4cm of fastapi] (nginxlocal) {
+			\faIcon{server}~\textbf{nginx}\\[-1pt]
+			UI + /api/v1
+		};
+		\node[container, right=0.4cm of nginxlocal, draw=purple!50, fill=purple!5] (tailscale) {
+			\faIcon{network-wired}~\textbf{Tailscale}\\[-1pt]
+			network sidecar
+		};
+
+		% Hardware boxes aligned above docker containers
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of fastapi] (fpga) {\faIcon{memory}\\FPGA};
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of nginxlocal] (radios) {\faIcon{microchip}\\24 Radios};
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of tailscale] (ant) {\faIcon{broadcast-tower}\\24 Antennas};
+
+		% HW connections (triple arrows for 24 channels)
+		\foreach \yoff in {0.1, 0, -0.1} {
+				\draw[conn] ([yshift=\yoff cm]ant.west) -- ([yshift=\yoff cm]radios.east);
+				\draw[conn] ([yshift=\yoff cm]radios.west) -- ([yshift=\yoff cm]fpga.east);
+			}
+
+		% --- Raspberry Pi label ---
+		\node[font=\scriptsize\bfseries, above=0.3cm of nginxlocal] (rpilabel) {\faIcon{raspberry-pi}~Raspberry Pi};
+		\node[font=\tiny, text=black!60, right=0.1cm of rpilabel] {hostname: \texttt{mg-tana}};
+
+		% SPI: FPGA straight down to FastAPI
+		\draw[conn, <->] (fpga.south) -- (fastapi.north)
+		node[midway, right, font=\tiny] {SPI};
+
+		% nginx -> fastapi
+		\draw[conn] (nginxlocal) -- node[above, font=\tiny] {/api/v1} (fastapi);
+
+		% nginx exposed via tailscale
+		\draw[conn, dotted, draw=purple!50] (nginxlocal.east) -- (tailscale.west)
+		node[above, midway, font=\tiny, text=purple!50] {exposed via};
+
+		% Docker compose box (drawn behind containers)
+		\begin{scope}[on background layer]
+			\node[dockerbox, fit=(nginxlocal)(fastapi)(tailscale),
+				label={[font=\tiny\bfseries, text=cyan!60!black]above left:Docker Compose}] (docker) {};
+		\end{scope}
+
+		% RPi box encompasses label + docker (wider)
+		\begin{scope}[on background layer]
+			\node[nodebox, fit=(rpilabel)(docker), inner xsep=1.0em] (rpibox) {};
+		\end{scope}
+
+		% --- Local LAN access ---
+		\node[clientbox, below=0.8cm of nginxlocal] (local) {
+			\faIcon{laptop}~Local LAN\\[-1pt]
+			{\tiny http://mg-tana.local:8000}
+		};
+		\draw[conn] (nginxlocal) -- node[right, font=\tiny] {HTTP} (local);
+
+		% --- Cloud (via tailscale sidecar) ---
+		\node[cloudbox, below=0.8cm of tailscale] (cloud) {
+			\faIcon{cloud}~\textbf{api.elec.ac.nz}\\[-1pt]
+			nginx (public)
+		};
+		\draw[wg] (tailscale) -- node[right, font=\tiny, text=purple!70] {Tailnet} (cloud);
+
+		% nginx exposed via tailscale
+		\draw[conn, dotted, draw=purple!50] (nginxlocal.east) -- (tailscale.west)
+		node[above, midway, font=\tiny, text=purple!50] {exposed via};
+
+		% --- Remote users ---
+		\node[clientbox, below=0.3cm of cloud, minimum width=2.4cm] (remote) {
+			\faIcon{globe}~Remote users\\[-1pt]
+			{\tiny API: api.elec.ac.nz/tart/mg-tana/}\\[-2pt]
+			{\tiny UI: tart.elec.ac.nz/viewer/mg-tana}
+		};
+		\draw[conn] (cloud) -- node[right, font=\tiny] {HTTPS} (remote);
+
+	\end{tikzpicture}
 \end{frame}
 
 
