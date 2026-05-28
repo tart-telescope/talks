@@ -96,8 +96,7 @@
 					inner sep=0.2em, line width=0.05em, minimum width=1.8cm, align=center, font=\tiny},
 			clientbox/.style={draw=green!60!black, rounded corners, fill=green!5,
 					inner sep=0.2em, line width=0.06em, minimum width=1.4cm, align=center, font=\tiny},
-			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed,
-					decoration={snake, amplitude=0.3mm, segment length=1.5mm}, decorate},
+			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed},
 			conn/.style={->, >=stealth, line width=0.08em, draw=black!60},
 		]
 
@@ -175,8 +174,7 @@
 			dockerbox/.style={draw=cyan!60, rounded corners=0.2cm, fill=cyan!3,
 					inner sep=0.4em, line width=0.06em},
 			conn/.style={->, >=stealth, line width=0.08em, draw=black!60},
-			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed,
-					decoration={snake, amplitude=0.3mm, segment length=1.5mm}, decorate},
+			wg/.style={<->, >=stealth, line width=0.08em, draw=purple!70, dashed},
 		]
 
 		% --- Hardware chain (top row, aligned with docker containers below) ---
@@ -184,21 +182,21 @@
 		% --- Docker Compose stack (inside RPi) ---
 		\node[container] (fastapi) {
 			\faIcon{python}~\textbf{FastAPI}\\[-1pt]
-			backend + SPI
+			SPI + backend
 		};
-		\node[container, right=0.4cm of fastapi] (nginxlocal) {
+		\node[container, right=1.6cm of fastapi] (nginxlocal) {
 			\faIcon{server}~\textbf{nginx}\\[-1pt]
-			UI + /api/v1
+			/api/v1 + UI(/)
 		};
-		\node[container, right=0.4cm of nginxlocal, draw=purple!50, fill=purple!5] (tailscale) {
+		\node[container, right=1.6cm of nginxlocal, draw=purple!50, fill=purple!5] (tailscale) {
 			\faIcon{network-wired}~\textbf{Tailscale}\\[-1pt]
 			network sidecar
 		};
 
 		% Hardware boxes aligned above docker containers
-		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of fastapi] (fpga) {\faIcon{memory}\\FPGA};
-		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of nginxlocal] (radios) {\faIcon{microchip}\\24 Radios};
-		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.8cm of tailscale] (ant) {\faIcon{broadcast-tower}\\24 Antennas};
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.4cm of fastapi] (fpga) {\faIcon{memory}\\FPGA};
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.4cm of nginxlocal] (radios) {\faIcon{microchip}\\24 Radios};
+		\node[hwbox, minimum width=2.0cm, minimum height=1.0cm, above=1.4cm of tailscale] (ant) {\faIcon{broadcast-tower}\\24 Antennas};
 
 		% HW connections (triple arrows for 24 channels)
 		\foreach \yoff in {0.1, 0, -0.1} {
@@ -227,20 +225,20 @@
 				label={[font=\tiny\bfseries, text=cyan!60!black]above left:Docker Compose}] (docker) {};
 		\end{scope}
 
-		% RPi box encompasses label + docker (wider)
+		% RPi box encompasses label + docker (full width)
 		\begin{scope}[on background layer]
-			\node[nodebox, fit=(rpilabel)(docker), inner xsep=1.0em] (rpibox) {};
+			\node[nodebox, fit=(rpilabel)(docker)(ant|-docker.south)(fpga|-docker.south), inner xsep=0.6em, inner ysep=0.5em] (rpibox) {};
 		\end{scope}
 
 		% --- Local LAN access ---
-		\node[clientbox, below=0.8cm of nginxlocal] (local) {
+		\node[clientbox, below=1.0cm of nginxlocal] (local) {
 			\faIcon{laptop}~Local LAN\\[-1pt]
 			{\tiny http://mg-tana.local:8000}
 		};
 		\draw[conn] (nginxlocal) -- node[right, font=\tiny] {HTTP} (local);
 
 		% --- Cloud (via tailscale sidecar) ---
-		\node[cloudbox, below=0.8cm of tailscale] (cloud) {
+		\node[cloudbox, below=1.0cm of tailscale] (cloud) {
 			\faIcon{cloud}~\textbf{api.elec.ac.nz}\\[-1pt]
 			nginx (public)
 		};
@@ -253,10 +251,16 @@
 		% --- Remote users ---
 		\node[clientbox, below=0.3cm of cloud, minimum width=2.4cm] (remote) {
 			\faIcon{globe}~Remote users\\[-1pt]
-			{\tiny API: api.elec.ac.nz/tart/mg-tana/}\\[-2pt]
-			{\tiny UI: tart.elec.ac.nz/viewer/mg-tana}
+			{\tiny api.elec.ac.nz/tart/mg-tana/api/v1/}
 		};
 		\draw[conn] (cloud) -- node[right, font=\tiny] {HTTPS} (remote);
+
+		% --- UI (separately hosted, calls the API) ---
+		\node[clientbox, below=0.3cm of remote, minimum width=2.4cm, draw=blue!50, fill=blue!5] (ui) {
+			\faIcon{desktop}~\textbf{Web UI}\\[-1pt]
+			{\tiny tart.elec.ac.nz/viewer/mg-tana}
+		};
+		\draw[conn, <->] (ui) -- node[right, font=\tiny] {calls API} (remote);
 
 	\end{tikzpicture}
 \end{frame}
