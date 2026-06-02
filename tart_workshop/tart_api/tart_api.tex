@@ -79,6 +79,58 @@
 
 \section{Restful API}
 
+\begin{frame}{What is a RESTful API?}
+	\begin{itemize}
+		\item \textbf{REST} = Representational State Transfer
+		\item Stateless client--server communication over HTTP
+		\item Standard HTTP methods:
+		      \begin{description}
+			      \item[GET] Retrieve data
+			      \item[POST] Create / submit data
+			      \item[PUT] Update existing resource
+			      \item[DELETE] Remove a resource
+		      \end{description}
+		\item Resources identified by URLs
+		\item Data exchanged as \textbf{JSON}
+		\item No session state on the server --- each request is self-contained
+	\end{itemize}
+
+	\vspace{0.3cm}
+	{\small Example:}\\
+	\texttt{GET https://api.elec.ac.nz/tart/mu-udm/api/v1/imaging/vis}\\
+	{\scriptsize $\rightarrow$ returns latest visibilities as JSON}
+\end{frame}
+
+\begin{frame}[fragile]{RESTful API Example}
+	{\small Request:}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{white}, backgroundcolor=\color{black!85}, rulecolor=\color{black!50}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+curl -X 'GET' \
+  'https://api.elec.ac.nz/tart/ghana/api/v1/info' \
+  -H 'accept: application/json'
+	\end{lstlisting}
+
+	\vspace{0.2cm}
+	{\small Response:}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{black!85}, backgroundcolor=\color{gray!8}, rulecolor=\color{gray!40}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+{
+  "info": {
+    "name": "GRAO - Ghana",
+    "operating_frequency": 1575420000,
+    "L0_frequency": 1571328000,
+    "baseband_frequency": 4092000,
+    "sampling_frequency": 16368000,
+    "bandwidth": 2500000,
+    "num_antenna": 24,
+    "location": {
+      "lon": -0.305557,
+      "lat": 5.749725,
+      "alt": 72
+    }
+  }
+}
+	\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Reference URL}
 	\url{https://tart.elec.ac.nz/docs/basics/tart-api/}
 \end{frame}
@@ -100,53 +152,60 @@
 			conn/.style={->, >=stealth, line width=0.08em, draw=black!60},
 		]
 
-		% --- Telescopes (left) ---
-		\node[tartbox] (tart1) {\faIcon{broadcast-tower} nz-sig};
-		\node[tartbox, below=0.2cm of tart1] (tart2) {\faIcon{broadcast-tower} za-kat};
-		\node[tartbox, below=0.2cm of tart2] (tart3) {\faIcon{broadcast-tower} mu-udm};
-		\node[below=0.05cm of tart3, font=\scriptsize] (dots) {\vdots};
-		\node[tartbox, below=0.05cm of dots] (tartn) {\faIcon{broadcast-tower} bd-iub};
-		\node[font=\tiny, text=orange!70, above=0.1cm of tart1] {Tailscale clients};
-
-		% --- nginx with two interfaces ---
-		\node[serverbox, right=2.2cm of tart2] (nginx) {
+		% --- nginx at top (with tailscale sidecar inside) ---
+		\node[serverbox, minimum height=1.5cm] (nginx) {
 			\faIcon{server}~\textbf{nginx}\\[-1pt]
-			api.elec.ac.nz
+			api.elec.ac.nz\\[2pt]
+			{\tiny\color{purple!70}\faIcon{network-wired} tailscale}
 		};
-		% Two sides of nginx
-		\node[font=\tiny, text=purple!70, left=0.1cm of nginx.west, anchor=east, align=right] (ts-side) {Tailscale\\interface};
-		\node[font=\tiny, text=green!50!black, right=0.1cm of nginx.east, anchor=west, align=left] (pub-side) {Public\\interface};
+		% Public interface label
+		\node[font=\tiny, text=green!50!black, right=0.1cm of nginx.east, anchor=west] (pub-side) {Public};
 
-		% Headscale above
-		\node[servicebox, above=0.6cm of nginx, draw=purple!50, fill=purple!5] (headscale) {
+		% Headscale below
+		\node[servicebox, below=0.6cm of nginx, draw=purple!50, fill=purple!5] (headscale) {
 			\faIcon{network-wired}~\textbf{Headscale}
 		};
 
-		% map below
-		\node[servicebox, below=0.6cm of nginx] (mapui) {
-			\faIcon{map}~\textbf{map.elec.ac.nz}
+		% nginx (via tailscale) connects to headscale
+		\draw[wg] (nginx.south) -- (headscale.north);
+		% map.elec.ac.nz below headscale (has its own nginx + API)
+		\node[servicebox, below=0.8cm of headscale, minimum width=2.2cm] (mapui) {
+			\faIcon{map}~\textbf{map.elec.ac.nz}\\[-1pt]
+			{\tiny API + nginx}
 		};
 
-		% gRPC map -> headscale
-		\draw[conn, draw=purple!60, dashed] (mapui) -- node[right, font=\tiny, text=purple!60] {gRPC} (headscale);
+		% gRPC: map API -> headscale
+		\draw[conn, <->, draw=purple!60, dashed] (mapui) -- node[right, font=\tiny, text=purple!60] {gRPC} (headscale);
 
-		% --- Clients (right) ---
-		\node[clientbox, right=2.2cm of nginx, yshift=0.5cm] (browser) {\faIcon{laptop} Browser};
-		\node[clientbox, below=0.2cm of browser] (python) {\faIcon{python} tart\_tools};
-		\node[clientbox, below=0.2cm of python] (cli) {\faIcon{terminal} curl};
+		% --- Telescopes (left, fanning into headscale) ---
+		\node[tartbox, left=2.5cm of headscale, yshift=1.2cm] (tart1) {\faIcon{broadcast-tower} nz-sig};
+		\node[tartbox, left=2.5cm of headscale, yshift=0.4cm] (tart2) {\faIcon{broadcast-tower} za-kat};
+		\node[tartbox, left=2.5cm of headscale, yshift=-0.4cm] (tart3) {\faIcon{broadcast-tower} mu-udm};
+		\node[left=2.5cm of headscale, yshift=-1.0cm, font=\scriptsize] (dots) {\vdots};
+		\node[tartbox, left=2.5cm of headscale, yshift=-1.5cm] (tartn) {\faIcon{broadcast-tower} bd-iub};
+		\node[font=\tiny, text=orange!70, above=0.1cm of tart1, align=center] {Telescopes\\Tailscale clients};
 
-		% --- WireGuard connections (Tailscale side) ---
-		\draw[wg] (tart1.east) -- (nginx.west|-tart1.east);
-		\draw[wg] (tart2.east) -- (nginx.west);
-		\draw[wg] (tart3.east) -- (nginx.west|-tart3.east);
-		\draw[wg] (tartn.east) -- (nginx.west|-tartn.east);
-		\node[font=\tiny\bfseries, text=purple!70, above=0.15cm of tart1.north east, anchor=south west] {WireGuard / Tailnet};
+		% --- Clients (right, fanning out from nginx) ---
+		\node[clientbox, right=2.5cm of nginx] (python) {\faIcon{python} tart\_tools};
+		\node[clientbox, right=2.5cm of nginx, yshift=-0.8cm] (cli) {\faIcon{terminal} curl};
+		\node[clientbox, right=2.5cm of nginx, yshift=-1.6cm] (browser) {\faIcon{laptop} Browser};
 
-		% --- Client connections (Public side) ---
-		\draw[conn] (nginx.east|-browser) -- (browser.west);
-		\draw[conn] (nginx.east|-python) -- (python.west);
-		\draw[conn] (nginx.east|-cli) -- (cli.west);
-		\node[font=\tiny\bfseries, text=green!50!black, above=0.05cm of browser.north west, anchor=south east] {HTTPS};
+		% --- WireGuard connections (all fan into Headscale) ---
+		\draw[wg] (tart1.east) -- (headscale.west);
+		\draw[wg] (tart2.east) -- (headscale.west);
+		\draw[wg] (tart3.east) -- (headscale.west);
+		\draw[wg] (tartn.east) -- (headscale.west);
+		\node[font=\tiny\bfseries, text=purple!70, above=0.15cm of tart1.north east, anchor=south west] {WireGuard};
+
+		% --- Client connections (fan out from Public side) ---
+		\draw[conn] (nginx.east) -- (python.west);
+		\draw[conn] (nginx.east) -- (cli.west);
+		\draw[conn] (nginx.east) -- (browser.west);
+		\node[font=\tiny\bfseries, text=green!50!black, above=0.05cm of python.north west, anchor=south east] {HTTPS};
+
+		% --- map.elec.ac.nz serves the UI to Browser ---
+		\draw[conn] (mapui.east) -- (browser.west)
+		node[below, midway, font=\tiny, text=blue!50] {UI};
 
 		% --- Example URL ---
 		\node[below=0.4cm of mapui, font=\tiny, text=black!50] {
