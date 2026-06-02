@@ -11,8 +11,15 @@
 \usepackage[fixed]{fontawesome5}
 \usepackage{tcolorbox}
 \usepackage{tikz}
+\usepackage{xcolor}
 \tcbuselibrary{skins,raster}
 \usetikzlibrary{positioning,fit,calc,decorations.pathmorphing,backgrounds}
+
+% Swagger UI method colors
+\definecolor{swagger-get}{HTML}{61AFFE}
+\definecolor{swagger-post}{HTML}{49CC90}
+\definecolor{swagger-put}{HTML}{FCA130}
+\definecolor{swagger-delete}{HTML}{F93E3E}
 
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
@@ -65,19 +72,32 @@
 	\titlepage
 \end{frame}
 
-% \begin{frame}
-% \vspace{1cm}
-%   \includegraphics[width=\linewidth]{../tart_overview/fig/spiral.jpeg}\\
-%   \centering{A TART radio telescope under construction in Mauritius}
-% \end{frame}
-%
-
-\begin{frame}
-	\tableofcontents
-	% You might wish to add the option [pausesections]
+\begin{frame}{Outline}
+	\begin{enumerate}
+		\item \textbf{Introduction} --- What is the TART API and why?
+		\item \textbf{System Architecture} --- Network, telescopes, services
+		\item \textbf{RESTful API Basics} --- HTTP methods, JSON, stateless
+		\item \textbf{The TART API in Practice} --- Endpoints, examples
+		\item \textbf{API in the Age of AI} --- Agents, composability, safety
+		\item \textbf{Single Telescope Node} --- Hardware to software stack
+		\item \textbf{Summary \& Discussion}
+	\end{enumerate}
 \end{frame}
 
-\section{Restful API}
+\section{Introduction}
+
+\begin{frame}{Introduction}
+	\begin{itemize}
+		\item TART = Transient Array Radio Telescope
+		\item 10+ telescopes deployed across Africa, Asia, NZ
+		\item Each telescope runs a \textbf{RESTful API}
+		\item All telescopes accessible via a single gateway:\\
+		      {\small\url{https://api.elec.ac.nz/}}
+		\item This talk: how the API works, how to use it, and why it matters
+	\end{itemize}
+\end{frame}
+
+\section{RESTful API Basics}
 
 \begin{frame}{What is a RESTful API?}
 	\begin{itemize}
@@ -131,9 +151,144 @@ curl -X 'GET' \
 	\end{lstlisting}
 \end{frame}
 
+\begin{frame}{Why an API Spec Matters --- in the Age of AI}
+	\textbf{A well-defined API is a contract --- for humans \emph{and} machines.}
+
+	\vspace{0.3cm}
+	\begin{itemize}
+		\item \textbf{AI agents can operate the telescope}
+		      \begin{itemize}
+			      \item LLMs read OpenAPI specs natively
+			      \item Autonomous calibration, monitoring, scheduling
+		      \end{itemize}
+		\item \textbf{Composability}
+		      \begin{itemize}
+			      \item Chain tools: observe $\rightarrow$ calibrate $\rightarrow$ image $\rightarrow$ publish
+			      \item Integrate with any language / platform
+		      \end{itemize}
+		\item \textbf{Reproducibility}
+		      \begin{itemize}
+			      \item Every action is a URL + JSON --- fully logged, replayable
+			      \item No hidden GUI state
+		      \end{itemize}
+		\item \textbf{Validation \& safety}
+		      \begin{itemize}
+			      \item Schema enforces types, ranges, required fields
+			      \item Auth separates read (public) from write (protected)
+		      \end{itemize}
+		\item \textbf{Auto-generated clients \& docs}
+		      \begin{itemize}
+			      \item SDKs in Python, JS, etc.\ from the spec
+			      \item Documentation is always up-to-date
+		      \end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[fragile]{API Documentation --- OpenAPI / Swagger}
+	\begin{itemize}
+		\item The TART API follows the \textbf{OpenAPI} specification
+		\item Interactive Swagger UI at: {\small \url{https://api.elec.ac.nz/docs/}}
+	\end{itemize}
+
+	\vspace{0.2cm}
+	\textbf{API route groups:}
+	{\scriptsize
+		\colorbox{swagger-get!15}{\textbf{\textcolor{swagger-get}{GET}}} public \quad
+		\colorbox{swagger-post!15}{\textbf{\textcolor{swagger-post}{POST}}} auth required \quad
+		\colorbox{swagger-put!15}{\textbf{\textcolor{swagger-put}{PUT}}} auth required
+	}
+
+	\vspace{0.1cm}
+	{\small\ttfamily
+		\begin{tabular}{@{}l l l@{}}
+			\textbf{authentication} & \colorbox{swagger-post!15}{\textcolor{swagger-post}{POST}} & /auth, /auth/refresh                      \\
+			\textbf{status}         & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /status/fpga, /status/channel             \\
+			\textbf{operation}      & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /mode, /mode/current                      \\
+			                        & \colorbox{swagger-post!15}{\textcolor{swagger-post}{POST}} & /mode/\{mode\}, /loop/\{mode\}            \\
+			\textbf{info}           & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /info                                     \\
+			\textbf{imaging}        & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /imaging/vis, /imaging/antenna\_positions \\
+			\textbf{calibration}    & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /calibration/gain                         \\
+			                        & \colorbox{swagger-post!15}{\textcolor{swagger-post}{POST}} & /calibration/gain, .../antenna\_positions \\
+			\textbf{acquisition}    & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /acquire/\{raw,vis\}/save                 \\
+			                        & \colorbox{swagger-put!15}{\textcolor{swagger-put}{PUT}}    & /acquire/\{raw,vis\}/save/\{flag\}        \\
+			                        & \colorbox{swagger-put!15}{\textcolor{swagger-put}{PUT}}    & /acquire/.../num\_samples\_exp/\{exp\}    \\
+			\textbf{data}           & \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}}    & /raw/data, /vis/data                      \\
+		\end{tabular}
+	}
+\end{frame}
+
+\begin{frame}[fragile]{API Example --- Visibility Data}
+	{\small Request:}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{white}, backgroundcolor=\color{black!85}, rulecolor=\color{black!50}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+curl -X 'GET' \
+  'https://api.elec.ac.nz/tart/ghana/api/v1/vis/data' \
+  -H 'accept: application/json'
+	\end{lstlisting}
+
+	\vspace{0.2cm}
+	{\small Response (handles to vis \& raw HDF5 files):}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{black!85}, backgroundcolor=\color{gray!8}, rulecolor=\color{gray!40}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+[
+  {
+    "filename": "vis/vis_2026-06-02_11_29_39.hdf",
+    "checksum": "509f48d30a83a791...4e470bf",
+    "timestamp": "2026-06-02T11:29:39.510412+00:00"
+  },
+  ...
+]
+	\end{lstlisting}
+\end{frame}
+
+\begin{frame}[fragile]{API Example --- Acquisition Parameters}
+	{\small Number of samples = $2^N$ (exponent $N \in [16, 24]$):}
+
+	\vspace{0.3cm}
+	{\small Read current setting:}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{white}, backgroundcolor=\color{black!85}, rulecolor=\color{black!50}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+curl -X 'GET' '.../api/v1/acquire/vis/num_samples_exp'
+	\end{lstlisting}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{black!85}, backgroundcolor=\color{gray!8}, rulecolor=\color{gray!40}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+{"N_samples_exp": 20}  // 2^20 = 1048576 samples
+	\end{lstlisting}
+
+	\vspace{0.3cm}
+	{\small Update setting (requires auth):}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{white}, backgroundcolor=\color{black!85}, rulecolor=\color{black!50}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+curl -X 'PUT' '.../api/v1/acquire/vis/num_samples_exp/22' \
+  -H 'Authorization: Bearer <token>'
+	\end{lstlisting}
+	\begin{lstlisting}[basicstyle=\ttfamily\scriptsize\color{black!85}, backgroundcolor=\color{gray!8}, rulecolor=\color{gray!40}, frame=single, framesep=0.4em, xleftmargin=0.5em, xrightmargin=0.5em]
+{"N_samples_exp": 22}  // 2^22 = 4194304 samples
+	\end{lstlisting}
+\end{frame}
+
 \begin{frame}{Reference URL}
 	\url{https://tart.elec.ac.nz/docs/basics/tart-api/}
 \end{frame}
+
+\section{Summary}
+
+\begin{frame}{Summary}
+	\begin{itemize}
+		\item TART telescopes are fully controlled via a \textbf{RESTful API}
+		\item 10+ telescopes connected through \textbf{Headscale/WireGuard} VPN
+		\item Single gateway at \texttt{api.elec.ac.nz} proxies to all nodes
+		\item OpenAPI spec $\rightarrow$ auto-docs, validation, AI-ready
+		\item Public \colorbox{swagger-get!15}{\textcolor{swagger-get}{GET}} endpoints for data access
+		\item Protected \colorbox{swagger-put!15}{\textcolor{swagger-put}{PUT}}/\colorbox{swagger-post!15}{\textcolor{swagger-post}{POST}} for telescope control
+	\end{itemize}
+
+	\vspace{0.4cm}
+	\centering
+	\begin{tabular}{ll}
+		\textbf{API Gateway:}   & \url{https://api.elec.ac.nz/}       \\
+		\textbf{Swagger Docs:}  & \url{https://api.elec.ac.nz/docs/}  \\
+		\textbf{Telescope Map:} & \url{https://map.elec.ac.nz/}       \\
+		\textbf{Documentation:} & \url{https://tart.elec.ac.nz/docs/} \\
+	\end{tabular}
+\end{frame}
+
+\section{System Architecture}
 
 \begin{frame}{TART Network Architecture}
 	\centering
@@ -214,6 +369,8 @@ curl -X 'GET' \
 
 	\end{tikzpicture}
 \end{frame}
+
+\section{Single Telescope Node}
 
 \begin{frame}{Single Telescope Node}
 	\centering
