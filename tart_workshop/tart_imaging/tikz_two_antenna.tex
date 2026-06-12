@@ -1,0 +1,41 @@
+
+\begin{tikzpicture}[>=Stealth]
+
+    % --- Coordinates ---
+    \coordinate (Star) at (-4, 6);
+    \coordinate (AntI) at (0, 0);
+    \coordinate (AntJ) at (4, 0);
+
+    % --- Draw Antennas ---
+    % Antenna i
+    \draw[thick] (AntI) -- ++(0,-0.5); % Stand
+    \draw[thick, fill=gray!20] (AntI) ++(-0.4,0) arc (240:360:0.46); % Dish
+    \node[below=12pt] at (AntI) {$A_i$};
+
+    % Antenna j
+    \draw[thick] (AntJ) -- ++(0,-0.5); % Stand
+    \draw[thick, fill=gray!20] (AntJ) ++(-0.4,-0.15) arc (260:380:0.46); % Dish
+    \node[below=12pt] at (AntJ) {$A_j$};
+
+    % --- Baseline b ---
+    \draw[<->, thick] ($(AntI)-(0,1)$) -- ($(AntJ)-(0,1)$) node[midway, fill=white] {$b_{i,j}$};
+
+    % --- Distant Star ---
+    \node[star, star points=5, star point ratio=2.25, fill=yellow, minimum size=0.5cm] at (Star) {};
+    \node[left] at (Star) {S};
+
+    % --- Paths to Star ---
+    % Path to Ant i
+    \draw[dashed, blue!70!black] (Star) -- (AntI)
+        node[midway, left, xshift=-2pt] {$r$};
+
+    % Path to Ant j
+    \draw[dashed, red!70!black] (Star) -- (AntJ)
+        node[midway, right, xshift=5pt, yshift=5pt] {$r + dr$};
+
+    % --- Pointing Direction ---
+    % Arrows showing antennas are pointing at the star
+    \draw[->, thick, gray] (AntI) -- ($(AntI)!1.5cm!(Star)$);
+    \draw[->, thick, gray] (AntJ) -- ($(AntJ)!1.5cm!(Star)$);
+
+\end{tikzpicture}

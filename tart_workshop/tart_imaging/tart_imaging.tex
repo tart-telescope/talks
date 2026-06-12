@@ -35,6 +35,7 @@
 % %   \logo{\includegraphics[height=1cm]{elec_logo.pdf}}
 % }
 
+
 \title[TART Imaging]{Radio Imaging. A Visual Explanation (with TART)}
 
 \author[Molteno]{Tim Molteno}
@@ -49,7 +50,6 @@
   Dept of Physics \& Electronics,
   Rhodes University, South Africa \\
   \vspace{1cm}
-  \vspace{2cm}
   \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
 }
 
@@ -68,6 +68,7 @@
 % Abstract: In this talk I'll give an overview of Africa's newest radio telescope, the TART, recently installed in Mauritius in a joint effort between SARAO, the University of Otago (NZ). I'll talk about TARTs origins, it's design and open-source philosophy as well as the upcoming project to install TART telescopes in the SKA African partner nations. I'll also include some details about improvements that will appear in TART-3, the next version of TART!
 
 \begin{frame}
+\vspace{1cm}
   \titlepage
 \end{frame}
 
@@ -149,46 +150,7 @@ Building images of the radio sky from many separate radio receivers.
 
 \begin{frame}
 \begin{center}
-\begin{tikzpicture}[>=Stealth]
-
-    % --- Coordinates ---
-    \coordinate (Star) at (-4, 6);
-    \coordinate (AntI) at (0, 0);
-    \coordinate (AntJ) at (4, 0);
-
-    % --- Draw Antennas ---
-    % Antenna i
-    \draw[thick] (AntI) -- ++(0,-0.5); % Stand
-    \draw[thick, fill=gray!20] (AntI) ++(-0.4,0) arc (240:360:0.46); % Dish
-    \node[below=12pt] at (AntI) {$A_i$};
-
-    % Antenna j
-    \draw[thick] (AntJ) -- ++(0,-0.5); % Stand
-    \draw[thick, fill=gray!20] (AntJ) ++(-0.4,-0.15) arc (260:380:0.46); % Dish
-    \node[below=12pt] at (AntJ) {$A_j$};
-
-    % --- Baseline b ---
-    \draw[<->, thick] ($(AntI)-(0,1)$) -- ($(AntJ)-(0,1)$) node[midway, fill=white] {$b_{i,j}$};
-
-    % --- Distant Star ---
-    \node[star, star points=5, star point ratio=2.25, fill=yellow, minimum size=0.5cm] at (Star) {};
-    \node[left] at (Star) {S};
-
-    % --- Paths to Star ---
-    % Path to Ant i
-    \draw[dashed, blue!70!black] (Star) -- (AntI)
-        node[midway, left, xshift=-2pt] {$r$};
-
-    % Path to Ant j
-    \draw[dashed, red!70!black] (Star) -- (AntJ)
-        node[midway, right, xshift=5pt, yshift=5pt] {$r + dr$};
-
-    % --- Pointing Direction ---
-    % Arrows showing antennas are pointing at the star
-    \draw[->, thick, gray] (AntI) -- ($(AntI)!1.5cm!(Star)$);
-    \draw[->, thick, gray] (AntJ) -- ($(AntJ)!1.5cm!(Star)$);
-
-\end{tikzpicture}
+\input{tikz_two_antenna}
 \end{center}
 \end{frame}
 
@@ -263,17 +225,27 @@ E_j & = & A e^{i (k (r + dr) - \omega (t+dt)} \\
 
 
 \begin{frame}{Visibility, Angles and Spacing}
-Well its geometry. A bit of diagram drawing gives.
- \begin{eqnarray*} V_{i,j} & = & A^2 e^{2 i \pi \left(\Delta x \sin{\left(\phi_{0} \right)} \sin{\left(\theta_{0} \right)} + \Delta y \sin{\left(\theta_{0} \right)} \cos{\left(\phi_{0} \right)} + \Delta z \cos{\left(\theta_{0} \right)}\right)}  \\
+\begin{columns}
+ \begin{column}{0.5\linewidth}
+\begin{center}
+\resizebox{\linewidth}{!}{
+\input{tikz_two_antenna}
+}
+\end{center}
+ \end{column}
+ \begin{column}{0.5\linewidth}
+$dr = \Delta x \sin(\phi) \sin(\theta)$.
+\begin{eqnarray*} V_{i,j} & = & A^2 e^{2 i \pi \left(\Delta x \sin{\left(\phi_{0} \right)} \sin{\left(\theta_{0} \right)} + \Delta y \sin{\left(\theta_{0} \right)} \cos{\left(\phi_{0} \right)} \right)}  \\
  & = & A^2 F(\Delta x, \Delta y)(\theta_0, \phi_0)
  \end{eqnarray*}
  where:
  \begin{itemize}
   \item $\Delta x_{ij}$ is the distance between antenna in $x$
   \item $\Delta y_{ij}$ is the distance between antennas in $y$
-  \item $\Delta z_{ij}$ is the distance between antennas in $z$ (usually zero)
-  \item We know these and they don't change. Depend on antenna layout.
+  \item Depend on antenna layout.
  \end{itemize}
+ \end{column}
+\end{columns}
  \begin{block}{Astronomers}
   We don't like $\Delta x$,$\Delta y$ so call them $u, v$.
  \end{block}
