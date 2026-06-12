@@ -9,6 +9,9 @@
 \usepackage{gensymb}
 \usepackage{amsmath, mathrsfs}
 
+\usepackage{tikz}
+\usetikzlibrary{shapes,arrows,positioning, fit, backgrounds, calc}
+
 % \captionsetup[figure]{labelformat=empty}% redefines the caption setup of the figures environment in the beamer class.
 
 \usetheme{Boadilla}
@@ -36,15 +39,14 @@
   \vspace{1cm}
   \includegraphics[width=3.5cm]{../tart_overview/fig/UofOtago_logo.pdf} \\
 
-%   \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
+  \includegraphics[width=0.6\linewidth]{../tart_overview/fig/elec_header_font.pdf}
 }
 
 \logo{
   \pgfputat{\pgfxy(-0.72,7.7)}{\pgfbox[center,base]{\includegraphics[width=1cm]{../tart_overview/fig/elec_logo.pdf}}}
-  \pgfputat{\pgfxy(-1,6.9)}{\pgfbox[center,base]{\includegraphics[width=1.5cm]{../tart_overview/fig/UofOtago_logo.pdf}}}
 }
 
-\date[Feb 2026] % (optional, should be abbreviation of conference name)
+\date[Madagascar 2026] % (optional, should be abbreviation of conference name)
 {}
 
 \begin{document}
@@ -75,7 +77,11 @@
   % You might wish to add the option [pausesections]
 \end{frame}
 
-\section{Origins}
+\section{What is TART?}
+
+\begin{frame}{TART: The network}
+   \includegraphics[width=\linewidth]{fig/web_map.png}
+\end{frame}
 
 \begin{frame}
 \includegraphics[width=\linewidth]{fig/2018-MeerKAT-5-1030x355.jpg}
@@ -91,15 +97,8 @@
 \end{block}
 \end{frame}
 
-\begin{frame}{TART: Early Prototype}
-   \includegraphics[width=\linewidth]{fig/albatross_frame.png}
-\end{frame}
-%
 
 
-\begin{frame}{TART: The network}
-   \includegraphics[width=\linewidth]{fig/web_map.png}
-\end{frame}
 
 \begin{frame}
    \includegraphics[width=\linewidth]{fig/zambia_array.jpg}
@@ -180,6 +179,82 @@
 %   \includegraphics[height=0.4\textheight]{fig/rhodes_photo_elec.jpg}
 % \end{frame}
 
+\begin{frame}
+\resizebox{\linewidth}{8cm}{
+\begin{tikzpicture}[
+    node distance=1.5cm,
+    font=\sffamily\small,
+    % Define styles
+    antenna/.style={isosceles triangle, draw, shape border rotate=-90, minimum width=0.5cm, minimum height=0.5cm, inner sep=0},
+    module/.style={rectangle, draw, fill=blue!5, minimum width=3cm, minimum height=3.5cm, rounded corners, align=center, thick},
+    component/.style={rectangle, draw, fill=orange!10, minimum width=2cm, minimum height=1cm, align=center, thick},
+    mb/.style={rectangle, draw, dashed, inner sep=1cm, fill=gray!5, rounded corners},
+    spi_bus/.style={<->, >=stealth, very thick, double, double distance=1pt},
+    arrow/.style={-stealth, thick}
+]
+
+    % --- RADIO MODULES AND ANTENNAS ---
+    % Drawing 3 representative modules to avoid clutter, implying the others
+    \foreach \m [count=\i] in {1, 2, 6} {
+        \node[module] (mod\i) at ({(\i-1)*4.5}, 0) {Radio Module \m \\ (4 Receivers)};
+
+        % Labeling the gap for modules 3, 4, 5
+        \ifnum \i=2
+            \node at ($(mod\i.east) + (0.75, 0)$) {\LARGE $\dots$};
+        \fi
+
+        % Antennas for each module
+        \foreach \a in {1, 2, 3, 4} {
+            \node[antenna] (ant\i\a) at ($(mod\i.north) + ({-1.2 + (\a-1)*0.8}, 1.75)$) {\pgfmathparse{int(\a+(\m-1)*4)}\pgfmathresult};
+            \draw[arrow] (ant\i\a.south) -- ($(mod\i.north) + ({-1.2 + (\a-1)*0.8}, 0)$);
+        }
+
+        % Annotation for antenna count
+        \node[above=0.2cm of ant\i2, xshift=0.4cm] {\small Antennas $\times$4};
+
+        % Labeling the gap for antennas 3, 4, 5
+        \ifnum \i=2
+            \node at ($(ant\i2.east) + (2.5, 0)$) {\LARGE $\dots$};
+        \fi
+
+    }
+
+    % --- MOTHERBOARD COMPONENTS ---
+    % Correlator (Central hub)
+    \node[component, minimum width=10cm, fill=green!10] (correlator) [below=2.5cm of mod2] {Correlator \\ (Processing 24 Channels)};
+
+    % Connections from modules to Correlator
+    \draw[arrow] (mod1.south) -- (mod1.south |- correlator.north);
+    \draw[arrow] (mod2.south) -- (mod2.south |- correlator.north);
+    \draw[arrow] (mod3.south) -- (mod3.south |- correlator.north);
+
+    % Clock and Control Computer
+    \node[component] (clock) [left=1.5cm of correlator] {Global \\ Clock};
+    \node[component] (computer) [right=1.5cm of correlator] {Control \\ Computer};
+
+    % Timing and Control lines
+    \draw[arrow, dashed, blue] (clock.east) -- (correlator.west);
+    \draw[arrow, dashed, blue] (clock.north) |- (mod1.west) node[pos=0.8, above] {GCLK};
+
+    \draw[spi_bus, red] (computer.west) -- node[above] {SPI} (correlator.east);
+    \draw[arrow, red] (computer.north) |- (mod3.east) node[pos=0.8, above] {Control};
+
+    % --- MOTHERBOARD BOUNDARY ---
+    \begin{scope}[on background layer]
+        \node[mb, fit=(mod1) (mod3) (correlator) (clock) (computer), label={[anchor=south east]below right:TART Motherboard}] (motherboard) {};
+    \end{scope}
+\end{tikzpicture}}
+\end{frame}
+
+\begin{frame}{TART: Early Prototype}
+   \includegraphics[width=\linewidth]{fig/albatross_frame.png}
+\end{frame}
+%
+\begin{frame}{TART Electronics}
+\begin{center}
+ \includegraphics[width=0.65\linewidth,angle=90]{fig/tart3_boxed.jpg}
+\end{center}
+\end{frame}
 
 
 \begin{frame}{TART: Overview}
@@ -259,10 +334,6 @@
  
 
 
-\begin{frame}{TART Electronics}
- \includegraphics[width=\textwidth]{fig/tart3_boxed.jpg}
-\end{frame}
-
 \begin{frame}{TART Features}
  \begin{columns}
   \begin{column}{0.4\linewidth}
@@ -305,7 +376,7 @@ The hardware is constantly being developed.
 \end{frame}
 
 
-\begin{frame}{Upgraded Radios, early 2026}
+\begin{frame}{Upgraded Radios}
   \begin{columns}
   \begin{column}{0.4\linewidth}
     \includegraphics[width=\linewidth]{fig/max2771.png}
@@ -509,7 +580,7 @@ The hardware is constantly being developed.
     \begin{itemize}
     \item TART 4.0?
     \item Transient event detection. Lightning, cosmic rays.
-    \item More workshops! Bangaladesh, Morrocco, Malta, Oxford, Cambridge, Berkeley, Burkina Faso, Malawi, Rarotonga.
+    \item More workshops! Ethiopia, Egypt, Morrocco, Malta, Oxford, Cambridge, Berkeley, Burkina Faso, Malawi, Rarotonga.
     \item Automatic tracking of near earth objects
     \item New Array Designs
     \item New imaging algorithms (Gridless, Direct from Data)
